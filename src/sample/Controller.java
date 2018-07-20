@@ -3,37 +3,34 @@ package sample;
 import Model.Passenger;
 import Model.Train;
 import Model.Station;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.application.*;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.lang.InterruptedException;
 
 public class Controller implements Initializable {
     @FXML
-    TextArea station1TextArea;
+    private  TextArea station1TextArea;
     @FXML
-    TextArea station2TextArea;
+    private  TextArea station2TextArea;
     @FXML
-    TextArea station3TextArea;
+    private  TextArea station3TextArea;
     @FXML
-    TextArea station4TextArea;
+    private  TextArea station4TextArea;
     @FXML
-    TextArea station5TextArea;
+    private  TextArea station5TextArea;
     @FXML
-    TextArea station6TextArea;
+    private  TextArea station6TextArea;
     @FXML
-    TextArea station7TextArea;
+    private  TextArea station7TextArea;
     @FXML
-    TextArea station8TextArea;
+    private  TextArea station8TextArea;
 
     @FXML
     Button station1AddButton;
@@ -94,11 +91,11 @@ public class Controller implements Initializable {
     public void addPassenger(Button b){
             System.out.println(b.getText());
             if(b.getText().compareToIgnoreCase("Station 1") == 0){
-                station1TextArea.appendText("Passenger"+ (newPassengers.size()+1) +" arrived in Station 1\n");
+                station1TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 1\n");
                 newPassengers.add(new Passenger(1,1));
             }
             else if(b.getText().compareToIgnoreCase("Station 2") == 0){
-                station3TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 2\n");
+                station2TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 2\n");
                 newPassengers.add(new Passenger(2, 2));
             }
             else if(b.getText().compareToIgnoreCase("Station 3") == 0){
@@ -127,11 +124,60 @@ public class Controller implements Initializable {
             }
         }
 
+    public void checkTrains(int station, String state){
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+            }
+        });
+    }
+
     @FXML
     public void addTrain(Button b) {
         trainnumber++;
         trainNumber.setText(trainnumber+"");
-        newTrains.add(new Train(trainnumber));
+
+        Train newtrain = new Train(trainnumber);
+        newtrain.setCapacity(Integer.parseInt(capacitySpinner.getValue() + ""));
+        newtrain.setCurrStation(0);
+        newTrains.add(newtrain);
+
+        Thread thread = new Thread(() -> {
+            int station = 0;
+            while (true){
+                station++;
+                updateStations(trainnumber, station);
+                newtrain.setCurrStation(station);
+
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
+
+    }
+
+    public void updateStations(int trainnumber, int station){
+        if (station == 1) {
+            station1TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+        } else if (station == 2){
+            station2TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+        } else if (station == 3){
+            station3TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+        } else if (station == 4){
+            station4TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+        } else if (station == 5){
+            station5TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+        } else if (station == 6){
+            station6TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+        } else if (station == 7){
+            station7TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+        } else if (station == 8){
+            station8TextArea.appendText("Train is arriving station " + station + "\n");
+        }
     }
 
 }

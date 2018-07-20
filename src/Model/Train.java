@@ -9,13 +9,14 @@ public class Train {
 
     private int trainNum;
     private int capacity;
-    private Station currStation;
-    private Station nextStation;
+    private int currStation;
+    private int nextStation;
     private ArrayList<Passenger> passengersBoarded;
     private TrainThread trainThrd;
 
     public Train (int trainNum) {
         this.trainNum = trainNum;
+
         trainThrd = new TrainThread("trainThrd");
         trainThrd.setTrainNum(trainNum);
         trainThrd.start();
@@ -37,19 +38,19 @@ public class Train {
         this.capacity = capacity;
     }
 
-    public Station getCurrStation() {
+    public int getCurrStation() {
         return currStation;
     }
 
-    public void setCurrStation(Station currStation) {
+    public void setCurrStation(int currStation) {
         this.currStation = currStation;
     }
 
-    public Station getNextStation() {
+    public int getNextStation() {
         return nextStation;
     }
 
-    public void setNextStation(Station nextStation) {
+    public void setNextStation(int nextStation) {
         this.nextStation = nextStation;
     }
 

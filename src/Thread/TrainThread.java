@@ -1,11 +1,13 @@
 package Thread;
+
 import java.util.*;
 
 public class TrainThread extends RunnableThread {
 
     Timer trainTimer = new Timer ();
-    private static int arrivalDelay = 6000; //TRAIN TAKES 8 SECONDS TO MOVE TO NEXT STATION
-    private static int departureDelay = 8000; //TRAIN TAKES 8 SECONDS TO MOVE TO NEXT STATION
+    private static int arrivalDelay = 6000; // train arrives to station in 6s
+    private static int departureDelay = 8000; // and leaves after 2s
+
     private int station = 0;
     public int trainnum;
 
@@ -19,19 +21,19 @@ public class TrainThread extends RunnableThread {
 
     @Override
     public void run() {
-        trainTimer.scheduleAtFixedRate(arrivalTask, 0000, arrivalDelay);
-        trainTimer.scheduleAtFixedRate(departureTask, 2000, departureDelay);
-
+        //trainTimer.scheduleAtFixedRate(arrivalTask, 0000, arrivalDelay);
+        //trainTimer.scheduleAtFixedRate(departureTask, 2000, departureDelay);
         //System.out.println("current time of execution: "+System.currentTimeMillis() % 1000);
     }
 
-    TimerTask arrivalTask =  new TimerTask(){
+    /*TimerTask arrivalTask =  new TimerTask(){
         public void run(){
             station++;
             if (station > 8){
                 arrivalTask.cancel();
             } else {
-                System.out.println("Train " + trainnum + " is arriving at station " + station);
+                sample.Controller c = new sample.Controller();
+                c.checkTrains(station,"Train " + trainnum + " is arriving at station " + station);
             }
         }
     };
@@ -41,9 +43,10 @@ public class TrainThread extends RunnableThread {
             if (station > 8){
                 departureTask.cancel();
             } else {
-                System.out.println("Train " + trainnum + " is leaving station " + station);
+                sample.Controller c = new sample.Controller();
+                c.checkTrains(station, "Train " + trainnum + " is leaving station " + station);
             }
         }
-    };
+    }; */
 
 }
