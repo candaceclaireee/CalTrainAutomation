@@ -138,15 +138,14 @@ public class Controller implements Initializable {
 
         Train newtrain = new Train(trainnumber);
         newtrain.setCapacity(Integer.parseInt(capacitySpinner.getValue() + ""));
-        newtrain.setCurrStation(0);
         newTrains.add(newtrain);
 
         Thread thread = new Thread(() -> {
             int station = 0;
-            while (true){
+            while (station < 8){
                 station++;
-                updateStations(trainnumber, station);
                 newtrain.setCurrStation(station);
+                updateStations(newtrain.getTrainNum(), newtrain.getCurrStation());
 
                 try {
                     Thread.sleep(5000);
@@ -156,8 +155,6 @@ public class Controller implements Initializable {
             }
         });
         thread.start();
-
-
     }
 
     public void updateStations(int trainnumber, int station){
