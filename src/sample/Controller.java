@@ -60,9 +60,6 @@ public class Controller implements Initializable {
     @FXML
     Button deploytrain;
 
-    ArrayList addPassengerButtons;
-    ArrayList stationTextAreas;
-
     ArrayList<Passenger> newPassengers = new ArrayList<Passenger>();
     ArrayList<Train> newTrains = new ArrayList<Train>();
     Station[] stations = new Station[8];
@@ -123,13 +120,6 @@ public class Controller implements Initializable {
                 newPassengers.add(new Passenger(8, 8));
             }
         }
-
-    public void checkTrains(int station, String state){
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-            }
-        });
-    }
 
     @FXML
     public void addTrain(Button b) {
