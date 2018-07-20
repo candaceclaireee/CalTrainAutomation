@@ -11,7 +11,8 @@ public class Passenger {
     private int stationCurr;
     private RunnableThread passengerThrd;
 
-    public Passenger () {
+    public Passenger (int stationSrc) {
+        this.stationSrc = stationSrc;
         passengerThrd = new PassengerThread("passengerThrd");
         passengerThrd.start();
     }
