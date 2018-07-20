@@ -21,6 +21,8 @@ public class TrainThread extends RunnableThread {
     public void run() {
         trainTimer.scheduleAtFixedRate(arrivalTask, 0000, arrivalDelay);
         trainTimer.scheduleAtFixedRate(departureTask, 2000, departureDelay);
+
+        //System.out.println("current time of execution: "+System.currentTimeMillis() % 1000);
     }
 
     TimerTask arrivalTask =  new TimerTask(){

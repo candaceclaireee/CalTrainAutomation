@@ -94,36 +94,36 @@ public class Controller implements Initializable {
     public void addPassenger(Button b){
             System.out.println(b.getText());
             if(b.getText().compareToIgnoreCase("Station 1") == 0){
-                station1TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 1\n");
-                newPassengers.add(new Passenger(1));
+                station1TextArea.appendText("Passenger"+ (newPassengers.size()+1) +" arrived in Station 1\n");
+                newPassengers.add(new Passenger(1,1));
             }
             else if(b.getText().compareToIgnoreCase("Station 2") == 0){
-                station2TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 2\n");
-                newPassengers.add(new Passenger(2));
+                station3TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 2\n");
+                newPassengers.add(new Passenger(2, 2));
             }
             else if(b.getText().compareToIgnoreCase("Station 3") == 0){
                 station3TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 3\n");
-                newPassengers.add(new Passenger(3));
+                newPassengers.add(new Passenger(3, 3));
             }
             else if(b.getText().compareToIgnoreCase("Station 4") == 0){
                 station4TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 4\n");
-                newPassengers.add(new Passenger(4));
+                newPassengers.add(new Passenger(4, 4));
             }
             else if(b.getText().compareToIgnoreCase("Station 5") == 0){
                 station5TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 5\n");
-                newPassengers.add(new Passenger(5));
+                newPassengers.add(new Passenger(5, 5));
             }
             else if(b.getText().compareToIgnoreCase("Station 6") == 0){
                 station6TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 6\n");
-                newPassengers.add(new Passenger(6));
+                newPassengers.add(new Passenger(6, 6));
             }
             else if(b.getText().compareToIgnoreCase("Station 7") == 0){
                 station7TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 7\n");
-                newPassengers.add(new Passenger(7));
+                newPassengers.add(new Passenger(7, 7));
             }
             else if(b.getText().compareToIgnoreCase("Station 8") == 0){
                 station8TextArea.appendText("Passenger "+ (newPassengers.size()+1) +" arrived in Station 8\n");
-                newPassengers.add(new Passenger(8));
+                newPassengers.add(new Passenger(8, 8));
             }
         }
 

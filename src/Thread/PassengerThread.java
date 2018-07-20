@@ -8,7 +8,7 @@ public class PassengerThread extends RunnableThread {
 
     @Override
     public void run() {
-        //add logic
+        //System.out.println("current time of execution: "+System.currentTimeMillis() % 1000);
     }
 
 }
