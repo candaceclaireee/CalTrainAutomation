@@ -72,7 +72,7 @@
             <Button fx:id="station7AddButton" layoutX="151.0" layoutY="90.0" mnemonicParsing="false" text="Station 7" />
             <Button fx:id="station5AddButton" layoutX="25.0" layoutY="90.0" mnemonicParsing="false" text="Station 5" />
             <Button fx:id="station6AddButton" layoutX="88.0" layoutY="90.0" mnemonicParsing="false" text="Station 6" />
-            <Text fx:id="trainNumber" layoutX="356.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+            <Text fx:id="trainNumber" layoutX="356.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                <font>
                   <Font size="48.0" />
                </font>
@@ -88,6 +88,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
+            <Button fx:id="deploytrain" layoutX="694.0" layoutY="78.0" mnemonicParsing="false" text="Deploy Train" />
          </children>
       </AnchorPane>
    </children>

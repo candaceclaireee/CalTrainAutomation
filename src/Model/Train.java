@@ -12,15 +12,13 @@ public class Train {
     private Station currStation;
     private Station nextStation;
     private ArrayList<Passenger> passengersBoarded;
-    private RunnableThread trainThrd;
+    private TrainThread trainThrd;
 
-    public Train () {
+    public Train (int trainNum) {
+        this.trainNum = trainNum;
         trainThrd = new TrainThread("trainThrd");
+        trainThrd.setTrainNum(trainNum);
         trainThrd.start();
-    }
-
-    public void start(){
-        //thread starts to run
     }
 
     public int getTrainNum() {

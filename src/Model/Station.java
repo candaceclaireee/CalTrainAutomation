@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Station {
+public class Station{
 
     private int stationNum;
     private Train currTrain;
