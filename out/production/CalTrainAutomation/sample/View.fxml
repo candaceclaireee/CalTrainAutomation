@@ -59,8 +59,8 @@
       </Text>
       <AnchorPane layoutX="42.0" layoutY="552.0" prefHeight="180.0" prefWidth="854.0">
          <children>
-            <Button fx:id="station4AddButton" layoutX="211.0" layoutY="64.0" mnemonicParsing="false" text="Station4" />
-            <Button fx:id="station3AddButton" layoutX="151.0" layoutY="64.0" mnemonicParsing="false" text="Station3" />
+            <Button fx:id="station4AddButton" layoutX="211.0" layoutY="64.0" mnemonicParsing="false" text="Station 4" />
+            <Button fx:id="station3AddButton" layoutX="151.0" layoutY="64.0" mnemonicParsing="false" text="Station 3" />
             <Button fx:id="station1AddButton" layoutX="25.0" layoutY="64.0" mnemonicParsing="false" text="Station 1" />
             <Text layoutX="36.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Passengers" textAlignment="CENTER" wrappingWidth="223.99999105930328">
                <font>
@@ -68,8 +68,8 @@
                </font>
             </Text>
             <Button fx:id="station2AddButton" layoutX="88.0" layoutY="64.0" mnemonicParsing="false" text="Station 2" />
-            <Button fx:id="station8AddButton" layoutX="211.0" layoutY="90.0" mnemonicParsing="false" text="Station8" />
-            <Button fx:id="station7AddButton" layoutX="151.0" layoutY="90.0" mnemonicParsing="false" text="Station7" />
+            <Button fx:id="station8AddButton" layoutX="211.0" layoutY="90.0" mnemonicParsing="false" text="Station 8" />
+            <Button fx:id="station7AddButton" layoutX="151.0" layoutY="90.0" mnemonicParsing="false" text="Station 7" />
             <Button fx:id="station5AddButton" layoutX="25.0" layoutY="90.0" mnemonicParsing="false" text="Station 5" />
             <Button fx:id="station6AddButton" layoutX="88.0" layoutY="90.0" mnemonicParsing="false" text="Station 6" />
             <Text fx:id="trainNumber" layoutX="356.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
