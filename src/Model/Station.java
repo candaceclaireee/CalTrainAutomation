@@ -8,8 +8,9 @@ public class Station{
     private Train currTrain;
     private ArrayList<Passenger> passengersWaiting;
 
-    public Station () {
-
+    public Station (int stationNum) {
+        this.stationNum = stationNum;
+        passengersWaiting = new ArrayList<Passenger>();
     }
 
     public int getStationNum() {
@@ -35,4 +36,17 @@ public class Station{
     public void setPassengersWaiting(ArrayList<Passenger> passengersWaiting) {
         this.passengersWaiting = passengersWaiting;
     }
+
+    public void addPassengersWaiting(Passenger passenger) {
+        this.passengersWaiting.add(passenger);
+    }
+
+    public void subPassengersWaiting(Passenger passenger) {
+        for (int i=0; i<passengersWaiting.size(); i++){
+            if (passenger.getPassengerNum()==passengersWaiting.get(i).getPassengerNum()){
+                passengersWaiting.remove(i);
+            }
+        }
+    }
+
 }
