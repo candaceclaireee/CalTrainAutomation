@@ -167,20 +167,21 @@ public class Controller implements Initializable {
         trainnumber++;
         trainNumber.setText(trainnumber+"");
 
-        Train newtrain = new Train(trainnumber,40);     //get capacity
+        Train newtrain = new Train(trainnumber,40);
         newtrain.setCapacity(Integer.parseInt(capacitySpinner.getValue() + ""));
+        newtrain.setAvailableSeats(newtrain.getCapacity());
         newTrains.add(newtrain);
+
 
         Thread thread = new Thread(() -> {
             int index = 0;
             while (index < 8){
                 if(index!=0){
-                    stations[index-1].setCurrTrain(null);
+                    stations[index-1].setCurrTrain(newtrain);
                 }
 
                 index++;
                 newtrain.setCurrStation(stations[index-1]);
-                newtrain.setAvailableSeats(newtrain.getCapacity());
                 stations[index-1].setCurrTrain(newtrain);
                 updateStations(newtrain.getTrainNum(), newtrain.getCurrStation());
 
@@ -224,69 +225,59 @@ public class Controller implements Initializable {
 
     public void updateTrains(int trainnumber, Station station){
         if (station.getStationNum() == 1) {
-            for(int i = 0; i < stations[0].getPassengersWaiting().size(); i++){
-                station1TextArea.appendText("Passenger "+ stations[0].getPassengersWaiting().get(i).getPassengerNum()+ " rode Train " + trainnumber + "\n");
-            }
             for(int i = 0; i < newPassengers.size(); i++){
-                stations[0].subPassengersWaiting(newPassengers.get(i));
+                int passengerNum = stations[0].subPassengersWaiting(newPassengers.get(i));
+                if (passengerNum != 0)
+                    station1TextArea.appendText("Passenger "+ passengerNum + " rode Train " + trainnumber + "\n");
             }
-
         }
         else if (station.getStationNum() == 2) {
-            for(int i = 0; i < stations[1].getPassengersWaiting().size(); i++){
-                station2TextArea.appendText("Passenger "+ stations[1].getPassengersWaiting().get(i).getPassengerNum()+ " rode Train " + trainnumber + "\n");
-            }
             for(int i = 0; i < newPassengers.size(); i++){
-                stations[1].subPassengersWaiting(newPassengers.get(i));
+                int passengerNum = stations[1].subPassengersWaiting(newPassengers.get(i));
+                if (passengerNum != 0)
+                    station2TextArea.appendText("Passenger "+ passengerNum + " rode Train " + trainnumber + "\n");
             }
         }
         else if (station.getStationNum() == 3) {
-            for(int i = 0; i < stations[2].getPassengersWaiting().size(); i++){
-                station3TextArea.appendText("Passenger "+ stations[2].getPassengersWaiting().get(i).getPassengerNum()+ " rode Train " + trainnumber + "\n");
-            }
             for(int i = 0; i < newPassengers.size(); i++){
-                stations[2].subPassengersWaiting(newPassengers.get(i));
+                int passengerNum = stations[2].subPassengersWaiting(newPassengers.get(i));
+                if (passengerNum != 0)
+                    station3TextArea.appendText("Passenger "+ passengerNum + " rode Train " + trainnumber + "\n");
             }
         }
         else if (station.getStationNum() == 4) {
-            for(int i = 0; i < stations[3].getPassengersWaiting().size(); i++){
-                station4TextArea.appendText("Passenger "+ stations[3].getPassengersWaiting().get(i).getPassengerNum()+ " rode Train " + trainnumber + "\n");
-            }
             for(int i = 0; i < newPassengers.size(); i++){
-                stations[3].subPassengersWaiting(newPassengers.get(i));
+                int passengerNum = stations[3].subPassengersWaiting(newPassengers.get(i));
+                if (passengerNum != 0)
+                    station4TextArea.appendText("Passenger "+ passengerNum + " rode Train " + trainnumber + "\n");
             }
         }
         else if (station.getStationNum() == 5) {
-            for(int i = 0; i < stations[4].getPassengersWaiting().size(); i++){
-                station5TextArea.appendText("Passenger "+ stations[4].getPassengersWaiting().get(i).getPassengerNum()+ " rode Train " + trainnumber + "\n");
-            }
             for(int i = 0; i < newPassengers.size(); i++){
-                stations[4].subPassengersWaiting(newPassengers.get(i));
+                int passengerNum = stations[4].subPassengersWaiting(newPassengers.get(i));
+                if (passengerNum != 0)
+                    station5TextArea.appendText("Passenger "+ passengerNum + " rode Train " + trainnumber + "\n");
             }
         }
         else if (station.getStationNum() == 6) {
-            for(int i = 0; i < stations[5].getPassengersWaiting().size(); i++){
-                station6TextArea.appendText("Passenger "+ stations[5].getPassengersWaiting().get(i).getPassengerNum()+ " rode Train " + trainnumber + "\n");
-            }
-
             for(int i = 0; i < newPassengers.size(); i++){
-                stations[5].subPassengersWaiting(newPassengers.get(i));
+                int passengerNum = stations[5].subPassengersWaiting(newPassengers.get(i));
+                if (passengerNum != 0)
+                    station6TextArea.appendText("Passenger "+ passengerNum + " rode Train " + trainnumber + "\n");
             }
         }
         else if (station.getStationNum() == 7) {
-            for(int i = 0; i < stations[6].getPassengersWaiting().size(); i++){
-                station7TextArea.appendText("Passenger "+ stations[6].getPassengersWaiting().get(i).getPassengerNum()+ " rode Train " + trainnumber + "\n");
-            }
             for(int i = 0; i < newPassengers.size(); i++){
-                stations[6].subPassengersWaiting(newPassengers.get(i));
+                int passengerNum = stations[6].subPassengersWaiting(newPassengers.get(i));
+                if (passengerNum != 0)
+                    station7TextArea.appendText("Passenger "+ passengerNum + " rode Train " + trainnumber + "\n");
             }
         }
         else if (station.getStationNum() == 8) {
-            for(int i = 0; i < stations[7].getPassengersWaiting().size(); i++){
-                station8TextArea.appendText("Passenger "+ stations[7].getPassengersWaiting().get(i).getPassengerNum()+ " rode Train " + trainnumber + "\n");
-            }
             for(int i = 0; i < newPassengers.size(); i++){
-                stations[7].subPassengersWaiting(newPassengers.get(i));
+                int passengerNum = stations[7].subPassengersWaiting(newPassengers.get(i));
+                if (passengerNum != 0)
+                    station8TextArea.appendText("Passenger "+ passengerNum + " rode Train " + trainnumber + "\n");
             }
         }
     }

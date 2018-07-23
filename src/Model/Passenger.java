@@ -72,10 +72,9 @@ public class Passenger {
             station.addPassengersWaiting(this);
         }
     }
-    public void load_passenger(){ // AARON DID THIS
-        if (currTrain != null && currTrain.getAvailableSeats()>0){
+    public void load_passenger() {
+        if (currTrain != null) {
             currTrain.station_Load_Train(currStation, this);
         }
-
     }
 }

@@ -8,6 +8,9 @@ public class Station{
     private Train currTrain;
     private ArrayList<Passenger> passengersWaiting;
 
+    private int recentlyBoarded;
+
+
     public Station (int stationNum) {
         this.stationNum = stationNum;
         passengersWaiting = new ArrayList<Passenger>();
@@ -42,17 +45,24 @@ public class Station{
         this.passengersWaiting.add(passenger);
     }
 
-    public void subPassengersWaiting(Passenger passenger) {
+    public int subPassengersWaiting(Passenger passenger) {
         for (int i=0; i< passengersWaiting.size(); i++) {
             if (currTrain.getAvailableSeats() > 0) {
                 if (passenger.getPassengerNum() == passengersWaiting.get(i).getPassengerNum()) {
-                    System.out.println("passenger " + passengersWaiting.get(i).getPassengerNum() + " boarded");
+                    System.out.println("Passenger " + passengersWaiting.get(i).getPassengerNum() + " boarded train " + currTrain.getTrainNum());
+                    recentlyBoarded = passengersWaiting.get(i).getPassengerNum();
+
                     passengersWaiting.get(i).setCurrTrain(currTrain);
+                    passengersWaiting.get(i).setCurrStation(null);
                     passengersWaiting.get(i).load_passenger();
                     passengersWaiting.remove(i);
-                }
+
+                    return recentlyBoarded;
+
+               }
             }
         }
+        return 0;
     }
 
 }

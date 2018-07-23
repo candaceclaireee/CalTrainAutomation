@@ -98,8 +98,8 @@ public class Train {
     //station_load_train(Station, availableSeats)
     public void station_Load_Train(Station station, Passenger passenger){
         if(availableSeats>=1){
-            station.subPassengersWaiting(passenger);
-            addPassengersBoarded(passenger);
+            //station.subPassengersWaiting(passenger);
+            //addPassengersBoarded(passenger);
             availableSeats--;
             takenSeats++;
         }
