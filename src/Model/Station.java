@@ -38,13 +38,19 @@ public class Station{
     }
 
     public void addPassengersWaiting(Passenger passenger) {
+        passenger.setCurrStation(this);
         this.passengersWaiting.add(passenger);
     }
 
     public void subPassengersWaiting(Passenger passenger) {
-        for (int i=0; i<passengersWaiting.size(); i++){
-            if (passenger.getPassengerNum()==passengersWaiting.get(i).getPassengerNum()){
-                passengersWaiting.remove(i);
+        for (int i=0; i< passengersWaiting.size(); i++) {
+            if (currTrain.getAvailableSeats() > 0) {
+                if (passenger.getPassengerNum() == passengersWaiting.get(i).getPassengerNum()) {
+                    System.out.println("passenger " + passengersWaiting.get(i).getPassengerNum() + " boarded");
+                    passengersWaiting.get(i).setCurrTrain(currTrain);
+                    passengersWaiting.get(i).load_passenger();
+                    passengersWaiting.remove(i);
+                }
             }
         }
     }

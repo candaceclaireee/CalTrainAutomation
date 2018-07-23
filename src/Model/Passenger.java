@@ -10,6 +10,8 @@ public class Passenger {
     private int stationSrc;
     private int stationDest;
     private int stationCurr;
+    private Station currStation; // AARON DID THIS
+    private Train currTrain; // AARON DID THIS
     private RunnableThread passengerThrd;
 
     public Passenger (int passengerNum, int stationSrc, int stationCurr) {
@@ -52,12 +54,28 @@ public class Passenger {
         this.stationCurr = stationCurr;
     }
 
+    public void setCurrTrain(Train train){
+        currTrain = train;
+
+    }
+    public void setCurrStation(Station station){
+        currStation = station;
+
+    }
+
     public void station_Wait_For_Train(Station station){
         while (station.getCurrTrain()== null){
             //do nothing
         }
         if (station.getCurrTrain()!= null){
-            station.getCurrTrain().station_Load_Train(station, this);
+            //station.getCurrTrain().station_Load_Train(station, this);
+            station.addPassengersWaiting(this);
         }
+    }
+    public void load_passenger(){ // AARON DID THIS
+        if (currTrain != null && currTrain.getAvailableSeats()>0){
+            currTrain.station_Load_Train(currStation, this);
+        }
+
     }
 }
