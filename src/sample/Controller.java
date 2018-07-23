@@ -107,42 +107,43 @@ public class Controller implements Initializable {
                 station1TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 1\n");
                 newPassengers.add(new Passenger(passengerNum, 1,1));
                 stations[0].addPassengersWaiting(newPassengers.get(newPassengers.size()-1));
-                //station_wait_for_train(Station)
-                newPassengers.get(newPassengers.size()-1).station_Wait_For_Train(stations[0]);
+                // station_wait_for_train(Station)
+                // newPassengers.get(newPassengers.size()-1).station_Wait_For_Train(stations[0]);
             }
             else if(b.getText().compareToIgnoreCase("Station 2") == 0){
                 int passengerNum = newPassengers.size()+1;
-                station1TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 1\n");
+                station2TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 2\n");
                 newPassengers.add(new Passenger(passengerNum, 2,2));
+                stations[1].addPassengersWaiting(newPassengers.get(newPassengers.size()-1));
             }
             else if(b.getText().compareToIgnoreCase("Station 3") == 0){
                 int passengerNum = newPassengers.size()+1;
-                station1TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 1\n");
+                station3TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 3\n");
                 newPassengers.add(new Passenger(passengerNum, 3,3));
             }
             else if(b.getText().compareToIgnoreCase("Station 4") == 0){
                 int passengerNum = newPassengers.size()+1;
-                station1TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 1\n");
+                station4TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 4\n");
                 newPassengers.add(new Passenger(passengerNum, 4,4));
             }
             else if(b.getText().compareToIgnoreCase("Station 5") == 0){
                 int passengerNum = newPassengers.size()+1;
-                station1TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 1\n");
+                station5TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 5\n");
                 newPassengers.add(new Passenger(passengerNum, 5,5));
             }
             else if(b.getText().compareToIgnoreCase("Station 6") == 0){
                 int passengerNum = newPassengers.size()+1;
-                station1TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 1\n");
+                station6TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 6\n");
                 newPassengers.add(new Passenger(passengerNum, 6,6));
             }
             else if(b.getText().compareToIgnoreCase("Station 7") == 0){
                 int passengerNum = newPassengers.size()+1;
-                station1TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 1\n");
+                station7TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 7\n");
                 newPassengers.add(new Passenger(passengerNum, 7,7));
             }
             else if(b.getText().compareToIgnoreCase("Station 8") == 0){
                 int passengerNum = newPassengers.size()+1;
-                station1TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 1\n");
+                station8TextArea.appendText("Passenger "+ passengerNum +" arrived in Station 8\n");
                 newPassengers.add(new Passenger(passengerNum, 8,8));
             }
     }
@@ -166,8 +167,8 @@ public class Controller implements Initializable {
                 }
 
                 index++;
-                newtrain.setCurrStation(stations[index]);
-                stations[index].setCurrTrain(newtrain);
+                newtrain.setCurrStation(stations[index-1]);
+                stations[index-1].setCurrTrain(newtrain);
                 updateStations(newtrain.getTrainNum(), newtrain.getCurrStation());
 
                 try {
@@ -182,21 +183,21 @@ public class Controller implements Initializable {
 
     public void updateStations(int trainnumber, Station station){
         if (station.getStationNum() == 1) {
-            station1TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+            station1TextArea.appendText("Train " + trainnumber +  " is at station " + station.getStationNum() + "\n");
         } else if (station.getStationNum() == 2){
-            station2TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+            station2TextArea.appendText("Train " + trainnumber +  " is at station " + station.getStationNum() + "\n");
         } else if (station.getStationNum() == 3){
-            station3TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+            station3TextArea.appendText("Train " + trainnumber +  " is at station " + station.getStationNum() + "\n");
         } else if (station.getStationNum() == 4){
-            station4TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+            station4TextArea.appendText("Train " + trainnumber +  " is at station " + station.getStationNum() + "\n");
         } else if (station.getStationNum() == 5){
-            station5TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+            station5TextArea.appendText("Train " + trainnumber +  " is at station " + station.getStationNum() + "\n");
         } else if (station.getStationNum() == 6){
-            station6TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+            station6TextArea.appendText("Train " + trainnumber +  " is at station " + station.getStationNum() + "\n");
         } else if (station.getStationNum() == 7){
-            station7TextArea.appendText("Train " + trainnumber +  " is at station " + station + "\n");
+            station7TextArea.appendText("Train " + trainnumber +  " is at station " + station.getStationNum() + "\n");
         } else if (station.getStationNum() == 8){
-            station8TextArea.appendText("Train is arriving station " + station + "\n");
+            station8TextArea.appendText("Train " + trainnumber +  " is at station " + station.getStationNum() + "\n");
         }
     }
 
