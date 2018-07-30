@@ -130,14 +130,14 @@ public class CalTrain {
 
     public boolean station_on_board(Station station, Passenger pass, boolean allRode) {
         boolean boarded = false;
-
+        System.out.println("station on board! station: "+station.getStationNum()+" passenger: "+pass.getPassNum());
         if (station.getCurrTrain() != null)
         {
             /* Passenger rides Train and updates Train stuff */
 //			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " +
 //				       station.getTrain(pass.getDirection()).getTrainNum());
 
-            feedText.add("Passenger " + pass.getPassNum() + " is on board at Train " +
+            System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " +
                     station.getCurrTrain().getTrainNum());
 
             station.getCurrTrain().addPassBoarded(pass);

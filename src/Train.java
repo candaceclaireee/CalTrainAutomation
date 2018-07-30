@@ -54,7 +54,6 @@ public class Train implements Runnable {
                             try{Thread.sleep(2000);}catch(Exception e){}
                     }
                 }
-
             }
             try{Thread.sleep(1700);} catch(Exception e) {}
         }

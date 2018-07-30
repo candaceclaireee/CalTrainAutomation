@@ -39,6 +39,22 @@ public class Main extends Application implements Initializable{
     @FXML
     javafx.scene.control.Button station8AddButton;
     @FXML
+    javafx.scene.control.Spinner station1CapSpin;
+    @FXML
+    javafx.scene.control.Spinner station2CapSpin;
+    @FXML
+    javafx.scene.control.Spinner station3CapSpin;
+    @FXML
+    javafx.scene.control.Spinner station4CapSpin;
+    @FXML
+    javafx.scene.control.Spinner station5CapSpin;
+    @FXML
+    javafx.scene.control.Spinner station6CapSpin;
+    @FXML
+    javafx.scene.control.Spinner station7CapSpin;
+    @FXML
+    javafx.scene.control.Spinner station8CapSpin;
+    @FXML
     Text trainNumber;
     @FXML
     Spinner capacitySpinner;
@@ -53,7 +69,7 @@ public class Main extends Application implements Initializable{
     public ArrayList<Station> allStations = new ArrayList<Station>();
     public ArrayList<Train> allTrains = new ArrayList<Train>();
 
-    int totalPassengers = 34;
+    int totalPassengers = 0;
     int passengersLeft = totalPassengers;	// Passengers left to be picked up
     int passengersServed = totalPassengers;	// Passengers who haven't arrived to their destination
     boolean trainsReturned = true;			// If trains haven't returned to Station 0
@@ -93,15 +109,29 @@ public class Main extends Application implements Initializable{
         station7AddButton.setOnAction(e -> addPassenger(station7AddButton));
         station8AddButton.setOnAction(e -> addPassenger(station8AddButton));
 
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 40, 1);
-        capacitySpinner.setValueFactory(valueFactory);
+        SpinnerValueFactory<Integer> valueFac = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 40, 1);
+        capacitySpinner.setValueFactory(valueFac);
+
+        SpinnerValueFactory<Integer> valueFactory1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 8, 2);
+        station1CapSpin.setValueFactory(valueFactory1);
+        SpinnerValueFactory<Integer> valueFactory2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(3, 8, 3);
+        station2CapSpin.setValueFactory(valueFactory2);
+        SpinnerValueFactory<Integer> valueFactory3 = new SpinnerValueFactory.IntegerSpinnerValueFactory(4, 8, 4);
+        station3CapSpin.setValueFactory(valueFactory3);
+        SpinnerValueFactory<Integer> valueFactory4 = new SpinnerValueFactory.IntegerSpinnerValueFactory(5, 8, 5);
+        station4CapSpin.setValueFactory(valueFactory4);
+        SpinnerValueFactory<Integer> valueFactory5 = new SpinnerValueFactory.IntegerSpinnerValueFactory(6, 8, 6);
+        station5CapSpin.setValueFactory(valueFactory5);
+        SpinnerValueFactory<Integer> valueFactory6 = new SpinnerValueFactory.IntegerSpinnerValueFactory(7, 8, 7);
+        station6CapSpin.setValueFactory(valueFactory6);
+        SpinnerValueFactory<Integer> valueFactory7 = new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 8, 8);
+        station7CapSpin.setValueFactory(valueFactory7);
 
         this.c = new CalTrain(this);
         createStations();
-        createPassengers();
-        if(totalPassengers > 0)
-            createTrain();
-
+//        createPassengers();
+//        if(totalPassengers > 0)
+//            createTrain();
         update();
     }
     ////////////////////////////////////////////////////////////////
@@ -120,81 +150,36 @@ public class Main extends Application implements Initializable{
         }
     }
 
-    public void createPassengers(){
-        /* Initialize Passengers */
-//        int[] inStation = {1,1,1,1,1,1,
-//                2,2,2,2,2,2,2,2,
-//                3,3,3,3,
-//                4,4,4,4,4,
-//                5,5,5,
-//                6,6,
-//                7,7,7,
-//                8,8,8};
-//        int[] outStation = {2,3,4,8,8,8,
-//                5,5,6,6,6,7,7,7,
-//                4,6,6,6,
-//                5,5,6,8,1,
-//                2,8,1,
-//                7,4,
-//                8,8,1,
-//                3,6,6};
-//        for(int i=0;i<totalPassengers;i++)
-//        {
-//            new Passenger(allStations.get(inStation[i]-1), c, i, allStations.get(outStation[i]-1));
-//            threadsCompleted++;
-//            try {Thread.sleep(300);} catch(Exception e){}
-//        }
+   // public void createPassengers() (DELETED TIHS FUNCTION)
 
-//        for(int i = 0; i < allStations.size(); i++){
-//            int pass = allStations.get(i).getPassWaiting().size();
-////            p.createStation(i, pass, allStations.get(i).getWaitPassCount(true));
-//            System.out.println("Station: " + (i + 1) + " Passengers: " + pass);
-//        }
-//        a();
-    }
-
-    public void addPassenger(int in, int out, boolean direction){
+    public void addPassenger(int in, int out){//, boolean direction){
         inStationNum = in;
-        Passenger temp = new Passenger(allStations.get(in), c, totalPassengers++, allStations.get(out));
+        totalPassengers++;
+        Passenger temp = new Passenger(allStations.get(in), c, totalPassengers, allStations.get(out));
 //        if(temp.getDirection() != direction){
 //            allStations.get(in).decWaitPass(temp, temp.getDirection());
 //            temp.setDirection(direction);
 //            allStations.get(in).addPassenger(temp, direction);
 //        }
 
-        System.out.println("Added Pass " + totalPassengers + " at Station " + in + " " + direction);
+        System.out.println("Added Pass " + totalPassengers + " at Station " + in + " dropoff at "+out);
         threadsCompleted++;
         try {Thread.sleep(300);} catch(Exception e){}
 
-        for(int i = 0; i < allStations.size(); i++){
-            int pass = allStations.get(i).getPassWaiting().size();
-//            p.createStation(i, pass, allStations.get(i).getWaitPassCount(true)); //add passenger gui
-            System.out.println("Station: " + (i + 1) + " Passengers: " + pass);
-        }
+//        for(int i = 0; i < allStations.size(); i++){
+//            int pass = allStations.get(i).getPassWaiting().size();
+////            p.createStation(i, pass, allStations.get(i).getWaitPassCount(true)); //add passenger gui
+//
+//
+//            System.out.println("Station: " + (i + 1) + " Passengers: " + pass);
+//        }
     }
 
-//    public void a(){
-//        for(int i = 0; i < t.stations.length; i++){
-//            int j = i;
-//            t.stations[i].setOnMouseClicked(e -> {
-//                currentStation = j;
-//                p.createStation(j, allStations.get(j).getWaitPassCount(false), allStations.get(j).getWaitPassCount(true));
-//                layout.setRight(p.layout);
-//            });
-//        }
-//
-//        for(int i = 0; i < t.trains.size(); i++){
-//            int j = i;
-//            t.getTrain(i).setOnMouseClicked(e -> {
-//                passLeft = allTrains.get(j).getRiders().size();
-//                nextStation = allTrains.get(j).getBoardStation().getStationNum();
-//            });
-//        }
-//    }
-
+//    public void a() (DELETED TIHS FUNCTION)
 
     public void createTrain(){
 //        freeSeats = 5; //FROM CAPACITY GUI
+        freeSeats = Integer.parseInt(capacitySpinner.getValue().toString());
         totalNumSeats += freeSeats;
 
         loadTrainReturned = false;
@@ -205,6 +190,7 @@ public class Main extends Application implements Initializable{
 
 //        p.train(allTrains.size(), tempTrain.getRiders().size(), tempTrain.getBoardStation().getStationNum());
 //        t.createTrain(this); //ADD TRAIN GUI
+        System.out.println("train "+allTrains.size()+" is created");
     }
 
     public void update(){
@@ -225,6 +211,7 @@ public class Main extends Application implements Initializable{
     public void logic(){
         for(int i = 0; i < allTrains.size(); i++){
             currentTrain = i;
+
             try{Thread.sleep(2500);} catch(Exception e) {e.printStackTrace();}
 
 //            if(pause){
@@ -247,18 +234,30 @@ public class Main extends Application implements Initializable{
             int threadsReaped = 0;
 
             //min : (passengers waiting, free seats)
+            System.out.println(allTrains.get(i).getCurrStation().passWaiting.size()+" MIN "+allTrains.get(i).getAvailable());
             threadsToReap = Math.min(allTrains.get(i).getCurrStation().passWaiting.size(),
                                      allTrains.get(i).getAvailable());
-
+            System.out.println(threadsReaped +" < "+ threadsToReap);
             while(threadsReaped < threadsToReap) {
+                System.out.println("pasok 1");
                 boolean boarded = false;
                 if(threadsCompleted > 0) {
-                    if(allTrains.get(i).getCurrStation().passWaiting.size() > 0)//may nag hihintay
+                    System.out.println("pasok 2");
+
+                    if(allTrains.get(i).getCurrStation().passWaiting.size() > 0){ //may nag hihintay
+                        System.out.println("pasok 3");
+
                         boarded = c.station_on_board(allTrains.get(i).getCurrStation(),             //board mo na woooo
                                                      allTrains.get(i).getCurrStation().passWaiting.get(0),
-                                threadsReaped + 1 == threadsToReap);
-                    if(boarded)
+                                                    threadsReaped + 1 == threadsToReap);
+                    }
+
+                    if(boarded){
+                        System.out.println("boarded");
                         threadsReaped++;
+                    }
+
+                        //GUI: REMOVE A PASSENGER
                 }
             }
 
@@ -282,7 +281,6 @@ public class Main extends Application implements Initializable{
                     System.out.println("All trains are gone!");
                 }
             }
-
         }
     }
 
@@ -306,49 +304,12 @@ public class Main extends Application implements Initializable{
 //					t.getAnim(currentTrain).start();
             }catch(Exception e){}
         }
-
-
     }
 
-//    public void resetTrains(){
-//        t.resetLayout();
-//    }
-
-//
-//    public void resetStations(){
-//        for(int i = 0; i < t.stations.length; i++){
-//            p.createStation(i, allStations.get(i).getWaitPassCount(false), allStations.get(i).getWaitPassCount(true));
-//            layout.setRight(p.layout);
-//        }
-//        p.createStation(currentStation, allStations.get(currentStation).getWaitPassCount(false), allStations.get(currentStation).getWaitPassCount(true));
-//        layout.setRight(p.layout);
-//    }
-//
-//    public void resetTrainPrev(){
-//        if(allTrains.size() > 0)
-//            p.train(allTrains.size(), allTrains.get(currentTrain).getRiders().size(), allTrains.get(currentTrain).getBoardStation().getStationNum());
-//    }
-//
-//    public void pause(){
-//        for(int i = 0; i < allTrains.size(); i++){
-//
-//            if(pause){
-//                try{
-//                    System.out.println("Threads are asleep");
-////                    t.getAnim(i).stop();
-////                    Thread.sleep(p.a.getTime());
-//                }
-//                catch(Exception e){
-//                    e.printStackTrace();
-//                }
-//                finally{
-//                    pause = false;
-////                    t.getAnim(i).start();
-//                }
-//            }
-//        }
-//
-//    }
+//    public void resetTrains()(DELETED TIHS FUNCTION)
+//    public void resetStations() (DELETED TIHS FUNCTION)
+//    public void resetTrainPrev() (DELETED TIHS FUNCTION)
+//    public void pause() (DELETED THIS FUNCTION)
 
 ////////////////////////////////////////////////////////////////
 
@@ -380,6 +341,8 @@ public class Main extends Application implements Initializable{
         imgview.toFront();
 
         //NEW TRAIN LOGIC!!!!!!!!!!!!!!!!
+        createTrain();
+
         Thread thread = new Thread(() -> {
             double nextStation = 0;
             while (nextStation <= 8){
@@ -452,6 +415,7 @@ public class Main extends Application implements Initializable{
             imgview.setLayoutX(value);
             imgview.setLayoutY(220);
             //NEW PASSENGER LOGIC!!!!!!!!!!!!!!!!
+            addPassenger(1, Integer.parseInt(station1CapSpin.getValue().toString()));
         }
         else if (b.getId().compareToIgnoreCase("station2AddButton") == 0){
             int value = rand.nextInt(461-375)+375;
@@ -459,36 +423,57 @@ public class Main extends Application implements Initializable{
             imgview.setLayoutY(220);
 
             imgview.toBack();
+
+            addPassenger(2, Integer.parseInt(station2CapSpin.getValue().toString()));
+
         }
         else if (b.getId().compareToIgnoreCase("station3AddButton") == 0){
             int value = rand.nextInt(760-635)+635;
             imgview.setLayoutX(value);
             imgview.setLayoutY(220);
+
+            addPassenger(3, Integer.parseInt(station3CapSpin.getValue().toString()));
+
         }
         else if (b.getId().compareToIgnoreCase("station4AddButton") == 0){
             int value = rand.nextInt(970-906)+906;
             imgview.setLayoutX(value);
             imgview.setLayoutY(220);
+
+            addPassenger(4, Integer.parseInt(station4CapSpin.getValue().toString()));
+
         }
         else if (b.getId().compareToIgnoreCase("station5AddButton") == 0){
             int value = rand.nextInt(170-35)+35;
             imgview.setLayoutX(value);
             imgview.setLayoutY(537);
+
+            addPassenger(5, Integer.parseInt(station5CapSpin.getValue().toString()));
+
         }
         else if (b.getId().compareToIgnoreCase("station6AddButton") == 0){
             int value = rand.nextInt(454-334)+334;
             imgview.setLayoutX(value);
             imgview.setLayoutY(537);
+
+            addPassenger(6, Integer.parseInt(station6CapSpin.getValue().toString()));
+
         }
         else if (b.getId().compareToIgnoreCase("station7AddButton") == 0){
             int value = rand.nextInt(697-619)+619;
             imgview.setLayoutX(value);
             imgview.setLayoutY(537);
+
+            addPassenger(7, Integer.parseInt(station7CapSpin.getValue().toString()));
+
         }
         else if (b.getId().compareToIgnoreCase("station8AddButton") == 0){
             int value = rand.nextInt(998-830)+830;
             imgview.setLayoutX(value);
             imgview.setLayoutY(537);
+
+            addPassenger(8, Integer.parseInt(station8CapSpin.getValue().toString()));
+
         }
 
         transitn.setByX(5);
