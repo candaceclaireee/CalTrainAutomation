@@ -91,6 +91,10 @@ public class Station {
         }
     }
 
+    public void addPassWaiting (Passenger passenger) {
+        passWaiting.add(passenger);
+    }
+
     public Station getNextStation() {
         return this.nextStation;
     }

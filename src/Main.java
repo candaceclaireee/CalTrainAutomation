@@ -71,17 +71,17 @@ public class Main extends Application implements Initializable{
 
     int totalPassengers = 0;
     int passengersLeft = totalPassengers;	// Passengers left to be picked up
-    int passengersServed = totalPassengers;	// Passengers who haven't arrived to their destination
-    boolean trainsReturned = true;			// If trains haven't returned to Station 0
+//    int passengersServed = totalPassengers;	// Passengers who haven't arrived to their destination
+//    boolean trainsReturned = true;			// If trains haven't returned to Station 0
 
     /* Program running-related variables */
     int totalPassengersBoarded = 0;
     int totalNumSeats = 0;
     int threadsCompleted = 0;
-    int maxFreeSeats = 5;
+//    int maxFreeSeats = 5;
     int trainCtr = 0;
-    int passCtr = 10;
-    int maxInsert = 0;
+//    int passCtr = 10;
+//    int maxInsert = 0;
     boolean loadTrainReturned = false;
 
     /* Temporary Variables */
@@ -156,12 +156,13 @@ public class Main extends Application implements Initializable{
         inStationNum = in;
         totalPassengers++;
         Passenger temp = new Passenger(allStations.get(in), c, totalPassengers, allStations.get(out));
+        System.out.println(temp);
 //        if(temp.getDirection() != direction){
 //            allStations.get(in).decWaitPass(temp, temp.getDirection());
 //            temp.setDirection(direction);
 //            allStations.get(in).addPassenger(temp, direction);
 //        }
-
+        allStations.get(in-1).addPassWaiting(temp);
         System.out.println("Added Pass " + totalPassengers + " at Station " + in + " dropoff at "+out);
         threadsCompleted++;
         try {Thread.sleep(300);} catch(Exception e){}
@@ -187,6 +188,8 @@ public class Main extends Application implements Initializable{
         loadTrainReturned = true;
         allTrains.add(tempTrain);
         trainCtr++;
+
+        allStations.get(0).setCurrTrain(tempTrain); //NEW ADDED BY CHESIE
 
 //        p.train(allTrains.size(), tempTrain.getRiders().size(), tempTrain.getBoardStation().getStationNum());
 //        t.createTrain(this); //ADD TRAIN GUI
@@ -234,18 +237,19 @@ public class Main extends Application implements Initializable{
             int threadsReaped = 0;
 
             //min : (passengers waiting, free seats)
+            System.out.println("train "+allTrains.get(i).trainNum+" is in "+allTrains.get(i).getCurrStation().getStationNum()+" with "+allTrains.get(i).getCurrStation().passWaiting.size()+ " waiters");
             System.out.println(allTrains.get(i).getCurrStation().passWaiting.size()+" MIN "+allTrains.get(i).getAvailable());
             threadsToReap = Math.min(allTrains.get(i).getCurrStation().passWaiting.size(),
                                      allTrains.get(i).getAvailable());
             System.out.println(threadsReaped +" < "+ threadsToReap);
             while(threadsReaped < threadsToReap) {
-                System.out.println("pasok 1");
+//                System.out.println("pasok 1");
                 boolean boarded = false;
                 if(threadsCompleted > 0) {
-                    System.out.println("pasok 2");
+//                    System.out.println("pasok 2");
 
                     if(allTrains.get(i).getCurrStation().passWaiting.size() > 0){ //may nag hihintay
-                        System.out.println("pasok 3");
+//                        System.out.println("pasok 3");
 
                         boarded = c.station_on_board(allTrains.get(i).getCurrStation(),             //board mo na woooo
                                                      allTrains.get(i).getCurrStation().passWaiting.get(0),
@@ -256,7 +260,6 @@ public class Main extends Application implements Initializable{
                         System.out.println("boarded");
                         threadsReaped++;
                     }
-
                         //GUI: REMOVE A PASSENGER
                 }
             }
@@ -414,7 +417,7 @@ public class Main extends Application implements Initializable{
             int value = rand.nextInt(215-50)+50;
             imgview.setLayoutX(value);
             imgview.setLayoutY(220);
-            //NEW PASSENGER LOGIC!!!!!!!!!!!!!!!!
+            //NEW PASSENGER LOGIC!!!!!!!!!!!!!!!
             addPassenger(1, Integer.parseInt(station1CapSpin.getValue().toString()));
         }
         else if (b.getId().compareToIgnoreCase("station2AddButton") == 0){

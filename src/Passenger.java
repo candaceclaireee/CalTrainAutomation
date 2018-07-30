@@ -17,6 +17,7 @@ public class Passenger implements Runnable {
     }
     @Override
     public void run() {
+        System.out.println("passenger "+this.passNum+" thread started");
         while(true) {
             sync.station_wait_for_train(src, this);
             try {Thread.sleep(500);} catch(Exception e){}

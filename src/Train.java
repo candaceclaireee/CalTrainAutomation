@@ -24,7 +24,11 @@ public class Train implements Runnable {
 
     @Override
     public void run() {
+
+
         while(getContinueRun()) {
+
+            System.out.println("train "+this.trainNum+" thread started");
 //			System.out.println("thread alive");
             if (currStation.getCurrTrain() == null)
             {

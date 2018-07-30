@@ -158,7 +158,6 @@ public class CalTrain {
             }
             boarded = true;
         }
-
 //		try { Thread.sleep(1000); } catch(Exception e) {}
         return boarded;
     }
