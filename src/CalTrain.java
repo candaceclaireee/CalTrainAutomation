@@ -165,6 +165,7 @@ public class CalTrain {
     }
 
     public int station_off_board(Station station, Train train) {
+        System.out.println("station off board");
         int exiters = 0;
         if (!train.getPassBoarded().isEmpty()) {
             //station.getLock().lock();

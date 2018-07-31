@@ -215,7 +215,7 @@ public class Main extends Application implements Initializable{
         for(int i = 0; i < allTrains.size(); i++){
             currentTrain = i;
 
-            try{Thread.sleep(7000);} catch(Exception e) {e.printStackTrace();}
+            try{Thread.sleep(2500);} catch(Exception e) {e.printStackTrace();}
 
 //            if(pause){
 //                try{
@@ -274,7 +274,7 @@ public class Main extends Application implements Initializable{
             try{Thread.sleep(800);} catch(Exception e){e.printStackTrace();}
 
             /* Make sure all trains return to first station */
-            if (totalPassServed == totalPassengers) {
+            if (totalPassServed == totalPassengers && i>0) {
                 allTrains.get(i).stopRun();
                 System.out.println("Train " + allTrains.get(i).getTrainNum() + " is decommissioned.");
                 decommissioned++;
@@ -286,9 +286,22 @@ public class Main extends Application implements Initializable{
                     System.out.println("All trains are gone!");
                 }
             }
-            allTrains.get(i).getCurrStation().setCurrTrain(null);
-            allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
-            allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
+
+            if (allTrains.get(i).getCurrStation().getStationNum() == 7){
+                allTrains.get(i).getCurrStation().setCurrTrain(null);
+//                allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
+//                allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
+                allTrains.remove(i);
+
+            }
+            else if (allTrains.get(i).getCurrStation().getStationNum() <= 6){
+                allTrains.get(i).getCurrStation().setCurrTrain(null);
+                allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
+                allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
+            }
+
+
+
         }
     }
 
@@ -375,9 +388,6 @@ public class Main extends Application implements Initializable{
     }
 
     public void moveTrainToNextStn(Node imageview, double nextStation) {
-//        for (int k=0; k<allTrains.size(); k++){
-//        }
-
         double xPos = 0;
         if (nextStation == 1) {
             xPos = 220;
