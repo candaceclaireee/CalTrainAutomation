@@ -155,7 +155,7 @@ public class Main extends Application implements Initializable{
     public void addPassenger(int in, int out){//, boolean direction){
         inStationNum = in;
         totalPassengers++;
-        Passenger temp = new Passenger(allStations.get(in), c, totalPassengers, allStations.get(out));
+        Passenger temp = new Passenger(allStations.get(in-1), c, totalPassengers, allStations.get(out-1));
         System.out.println(temp);
 //        if(temp.getDirection() != direction){
 //            allStations.get(in).decWaitPass(temp, temp.getDirection());
@@ -215,7 +215,7 @@ public class Main extends Application implements Initializable{
         for(int i = 0; i < allTrains.size(); i++){
             currentTrain = i;
 
-            try{Thread.sleep(2500);} catch(Exception e) {e.printStackTrace();}
+            try{Thread.sleep(7000);} catch(Exception e) {e.printStackTrace();}
 
 //            if(pause){
 //                try{
@@ -238,19 +238,21 @@ public class Main extends Application implements Initializable{
 
             //min : (passengers waiting, free seats)
             System.out.println("train "+allTrains.get(i).trainNum+" is in "+allTrains.get(i).getCurrStation().getStationNum()+" with "+allTrains.get(i).getCurrStation().passWaiting.size()+ " waiters");
-            System.out.println(allTrains.get(i).getCurrStation().passWaiting.size()+" MIN "+allTrains.get(i).getAvailable());
+            System.out.println("waiters: "+allTrains.get(i).getCurrStation().passWaiting.size()+" MIN available: "+allTrains.get(i).getAvailable());
             threadsToReap = Math.min(allTrains.get(i).getCurrStation().passWaiting.size(),
                                      allTrains.get(i).getAvailable());
-            System.out.println(threadsReaped +" < "+ threadsToReap);
+
             while(threadsReaped < threadsToReap) {
-//                System.out.println("pasok 1");
+                System.out.println(threadsReaped +" < "+ threadsToReap);
+                System.out.println("pasok 1");
                 boolean boarded = false;
                 if(threadsCompleted > 0) {
-//                    System.out.println("pasok 2");
+                    System.out.println("pasok 2");
 
                     if(allTrains.get(i).getCurrStation().passWaiting.size() > 0){ //may nag hihintay
-//                        System.out.println("pasok 3");
+                        System.out.println("pasok 3");
 
+                        System.out.println(allTrains.get(i).getCurrStation().getStationNum());
                         boarded = c.station_on_board(allTrains.get(i).getCurrStation(),             //board mo na woooo
                                                      allTrains.get(i).getCurrStation().passWaiting.get(0),
                                                     threadsReaped + 1 == threadsToReap);
@@ -284,6 +286,9 @@ public class Main extends Application implements Initializable{
                     System.out.println("All trains are gone!");
                 }
             }
+            allTrains.get(i).getCurrStation().setCurrTrain(null);
+            allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
+            allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
         }
     }
 
@@ -370,23 +375,34 @@ public class Main extends Application implements Initializable{
     }
 
     public void moveTrainToNextStn(Node imageview, double nextStation) {
+//        for (int k=0; k<allTrains.size(); k++){
+//        }
+
         double xPos = 0;
-        if (nextStation == 1)
+        if (nextStation == 1) {
             xPos = 220;
-        else if (nextStation == 2)
+        }
+        else if (nextStation == 2){
             xPos = 330;
-        else if (nextStation == 3)
+        }
+        else if (nextStation == 3){
             xPos = 280;
-        else if (nextStation == 4)
+        }
+        else if (nextStation == 4){
             xPos = 250;
-        else if (nextStation == 5)
+        }
+        else if (nextStation == 5){
             xPos = 220;
-        else if (nextStation == 6)
+        }
+        else if (nextStation == 6){
             xPos = 330;
-        else if (nextStation == 7)
+        }
+        else if (nextStation == 7){
             xPos = 260;
-        else if (nextStation == 8)
+        }
+        else if (nextStation == 8){
             xPos = 230;
+        }
         else if (nextStation == 9) // (CREATED JUST TO REMOVE THE TRAIN FROM GUI)
             xPos = 270;
 

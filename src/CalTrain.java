@@ -57,6 +57,7 @@ public class CalTrain {
 
             /* Boarding: Train side */
 //            while(station.getWaitPassCount(train.getDirection()) > 0 && station.getEmptySeats(train.getDirection()) > 0)
+            //meron pang waiters & meron pang available
             while(station.getPassWaiting().size() > 0 && station.getCurrTrain().getAvailable() > 0)
             {
                 try {
@@ -130,9 +131,10 @@ public class CalTrain {
 
     public boolean station_on_board(Station station, Passenger pass, boolean allRode) {
         boolean boarded = false;
-        System.out.println("station on board! station: "+station.getStationNum()+" passenger: "+pass.getPassNum());
         if (station.getCurrTrain() != null)
         {
+            System.out.println("station on board! station: "+station.getStationNum()+" passenger: "+pass.getPassNum());
+
             /* Passenger rides Train and updates Train stuff */
 //			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " +
 //				       station.getTrain(pass.getDirection()).getTrainNum());
