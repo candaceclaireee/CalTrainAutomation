@@ -36,8 +36,7 @@ public class Main extends Application implements Initializable{
     javafx.scene.control.Button station6AddButton;
     @FXML
     javafx.scene.control.Button station7AddButton;
-    @FXML
-    javafx.scene.control.Button station8AddButton;
+    
     @FXML
     javafx.scene.control.Spinner station1CapSpin;
     @FXML
@@ -54,6 +53,8 @@ public class Main extends Application implements Initializable{
     javafx.scene.control.Spinner station7CapSpin;
     @FXML
     javafx.scene.control.Spinner station8CapSpin;
+    @FXML
+    javafx.scene.control.TextArea infoFeed;
     @FXML
     Text trainNumber;
     @FXML
@@ -107,7 +108,6 @@ public class Main extends Application implements Initializable{
         station5AddButton.setOnAction(e -> addPassenger(station5AddButton));
         station6AddButton.setOnAction(e -> addPassenger(station6AddButton));
         station7AddButton.setOnAction(e -> addPassenger(station7AddButton));
-        station8AddButton.setOnAction(e -> addPassenger(station8AddButton));
 
         SpinnerValueFactory<Integer> valueFac = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 40, 1);
         capacitySpinner.setValueFactory(valueFac);
@@ -129,9 +129,6 @@ public class Main extends Application implements Initializable{
 
         this.c = new CalTrain(this);
         createStations();
-//        createPassengers();
-//        if(totalPassengers > 0)
-//            createTrain();
         update();
     }
     ////////////////////////////////////////////////////////////////
@@ -139,7 +136,6 @@ public class Main extends Application implements Initializable{
 
     public void createStations(){
         passLeft = 0;
-        System.out.println("Initializing stations");
         for(int i=0;i<8;i++) {
             allStations.add(c.station_init(i));
             if (i >= 1 && i < 8) {
@@ -148,6 +144,8 @@ public class Main extends Application implements Initializable{
             }
 //            System.out.println(allStations.get(i).displayNextStations());
         }
+        System.out.println("[STATIONS INITIALIZED] \n");
+        addLog("-----------------------------------------------------\n");
     }
 
    // public void createPassengers() (DELETED TIHS FUNCTION)
@@ -164,20 +162,19 @@ public class Main extends Application implements Initializable{
 //            allStations.get(in).addPassenger(temp, direction);
 //        }
         allStations.get(in-1).addPassWaiting(temp);
-        System.out.println("Added Pass " + totalPassengers + " at Station " + in + " dropoff at "+out);
+        addLog( "[PASSENGER " + totalPassengers +"] Arrived at station " + in + " to station " + out +"\n");
+        addLog("-----------------------------------------------------\n");
         threadsCompleted++;
         try {Thread.sleep(300);} catch(Exception e){}
-
 //        for(int i = 0; i < allStations.size(); i++){
 //            int pass = allStations.get(i).getPassWaiting().size();
 ////            p.createStation(i, pass, allStations.get(i).getWaitPassCount(true)); //add passenger gui
-//
-//
+
 //            System.out.println("Station: " + (i + 1) + " Passengers: " + pass);
 //        }
     }
 
-//    public void a() (DELETED TIHS FUNCTION)
+//    public void a() (DELETED THIS FUNCTION)
 
     public void createTrain(){
 //        freeSeats = 5; //FROM CAPACITY GUI
@@ -194,7 +191,9 @@ public class Main extends Application implements Initializable{
 
 //        p.train(allTrains.size(), tempTrain.getRiders().size(), tempTrain.getBoardStation().getStationNum());
 //        t.createTrain(this); //ADD TRAIN GUI
-        System.out.println("train "+allTrains.size()+" is created");
+
+        addLog( "[TRAIN " + allTrains.size() + "] Successfully deployed with capacity " + freeSeats + "\n");
+        addLog("-----------------------------------------------------\n");
     }
 
     public void update(){
@@ -238,7 +237,8 @@ public class Main extends Application implements Initializable{
             int threadsReaped = 0;
 
             //min : (passengers waiting, free seats)
-            System.out.println("train "+allTrains.get(i).trainNum+" is in station"+(allTrains.get(i).getCurrStation().getStationNum()+1)+" with "+allTrains.get(i).getCurrStation().passWaiting.size()+ " waiters");
+            addLog(("[TRAIN "+(allTrains.get(i).trainNum+1) + "] Currently at station "+(allTrains.get(i).getCurrStation().getStationNum()+1))+"\n");
+            addLog("-----------------------------------------------------\n");
             System.out.println("waiters: "+allTrains.get(i).getCurrStation().passWaiting.size()+" MIN available: "+allTrains.get(i).getAvailable());
             threadsToReap = Math.min(allTrains.get(i).getCurrStation().passWaiting.size(),
                                      allTrains.get(i).getAvailable());
@@ -348,7 +348,7 @@ public class Main extends Application implements Initializable{
         primaryStage.setTitle("CalTrainII Automation (Process Synchronization)");
         primaryStage.setResizable(false);
         rootPane.getChildren().add(root);
-        primaryStage.setScene(new Scene(rootPane, 1077, 690));
+        primaryStage.setScene(new Scene(rootPane, 1360, 690));
         primaryStage.show();
     }
 
@@ -374,7 +374,7 @@ public class Main extends Application implements Initializable{
             int delay = 3500;
             while (nextStation <= 8){
                 nextStation ++;
-                if (nextStation >= 5){
+                if (nextStation >= 5) {
                     imgview.setLayoutX(-1200);
                     imgview.setLayoutY(539);
                     delay = 3800;
@@ -398,30 +398,24 @@ public class Main extends Application implements Initializable{
         double xPos = 0;
         if (nextStation == 1) {
             xPos = 220;
-        }
-        else if (nextStation == 2){
+        } else if (nextStation == 2) {
             xPos = 330;
-        }
-        else if (nextStation == 3){
+        } else if (nextStation == 3) {
             xPos = 280;
-        }
-        else if (nextStation == 4){
+        } else if (nextStation == 4) {
             xPos = 180;
-        }
-        else if (nextStation == 5){
+        } else if (nextStation == 5) {
             xPos = 150;
-        }
-        else if (nextStation == 6){
+        } else if (nextStation == 6) {
             xPos = 330;
-        }
-        else if (nextStation == 7){
+        } else if (nextStation == 7) {
             xPos = 260;
-        }
-        else if (nextStation == 8){
+        } else if (nextStation == 8) {
             xPos = 230;
-        }
-        else if (nextStation == 9) // (CREATED JUST TO REMOVE THE TRAIN FROM GUI)
+        } else if (nextStation == 9) {// (CREATED JUST TO REMOVE THE TRAIN FROM GUI)
             xPos = 270;
+            imageview.setVisible(false);
+        }
 
         TranslateTransition transitn = new TranslateTransition(Duration.millis(3000), imageview);
         transitn.setFromX(imageview.getTranslateX());
@@ -503,16 +497,9 @@ public class Main extends Application implements Initializable{
             addPassenger(7, Integer.parseInt(station7CapSpin.getValue().toString()), imgview);
 
         }
-//        else if (b.getId().compareToIgnoreCase("station8AddButton") == 0){
-//            int value = rand.nextInt(998-830)+830;
-//            imgview.setLayoutX(value);
-//            imgview.setLayoutY(537);
-//
-//            addPassenger(8, Integer.parseInt(station8CapSpin.getValue().toString()));
-//
-//        }
 
-        transitn.setByX(5);
+
+        transitn.setByX(10);
         transitn.setRate(3);
 
         transitn.setInterpolator(Interpolator.EASE_IN);
@@ -520,6 +507,12 @@ public class Main extends Application implements Initializable{
         transitn.play();
 
         rootPane.getChildren().add(imgview);
+    }
+
+    public void addLog(String text){
+        infoFeed.appendText(text);
+        //infoFeed.appendText(text);
+
     }
 
     public static void main(String[] args) {

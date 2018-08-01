@@ -1,3 +1,5 @@
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 
 public class Train implements Runnable {
@@ -9,6 +11,7 @@ public class Train implements Runnable {
     Station currStation;
     ArrayList <Passenger> passBoarded = new ArrayList<Passenger>();
     CalTrain sync;
+    ImageView sprite;
     Thread trainThread = new Thread();
 
     public Train(Station currStation, CalTrain sync, int capacity, int trainNum) {
@@ -20,6 +23,7 @@ public class Train implements Runnable {
         this.taken = 0;
         continueRun = true;
         trainThread.start();
+        sprite = null;
     }
 
     @Override
@@ -62,6 +66,13 @@ public class Train implements Runnable {
             try{Thread.sleep(1700);} catch(Exception e) {}
         }
 
+    }
+
+    public void setSprite(ImageView sprite) {
+        this.sprite = sprite;
+    }
+    public ImageView getSprite(){
+        return sprite;
     }
 
     public boolean getContinueRun() {

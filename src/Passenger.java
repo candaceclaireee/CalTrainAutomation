@@ -34,7 +34,6 @@ public class Passenger implements Runnable {
     public void setSprite(ImageView sprite){
         this.sprite = sprite;
     }
-
     public ImageView getSprite(){
         return sprite;
     }

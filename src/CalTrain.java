@@ -14,7 +14,7 @@ public class CalTrain {
 
 
     public Station station_init(int num) {
-        System.out.println("Initializing Station " + num);
+//        System.out.println("Initializing Station " + num);
         return new Station(num);
     }
 
