@@ -61,6 +61,22 @@ public class Main extends Application implements Initializable{
     Spinner capacitySpinner;
     @FXML
     Button deploytrain;
+    @FXML
+    Text station1PassengerText;
+    @FXML
+    Text station2PassengerText;
+    @FXML
+    Text station3PassengerText;
+    @FXML
+    Text station4PassengerText;
+    @FXML
+    Text station5PassengerText;
+    @FXML
+    Text station6PassengerText;
+    @FXML
+    Text station7PassengerText;
+    @FXML
+    Text station8PassengerText;
 
     public static Stage primaryStage;
     public static Pane rootPane;
@@ -165,6 +181,7 @@ public class Main extends Application implements Initializable{
         addLog( "[PASSENGER " + totalPassengers +"] Arrived at station " + in + " to station " + out +"\n");
         addLog("-----------------------------------------------------\n");
         threadsCompleted++;
+        updateStationPassengerText();
         try {Thread.sleep(300);} catch(Exception e){}
 //        for(int i = 0; i < allStations.size(); i++){
 //            int pass = allStations.get(i).getPassWaiting().size();
@@ -262,11 +279,10 @@ public class Main extends Application implements Initializable{
                                                     threadsReaped + 1 == threadsToReap);
                     }
 
-                    if(boarded){
+                    if(boarded) {
                         System.out.println("boarded");
                         threadsReaped++;
                     }
-                        //GUI: REMOVE A PASSENGER
                 }
             }
 
@@ -304,9 +320,19 @@ public class Main extends Application implements Initializable{
                 allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
             }
 
-
+            updateStationPassengerText();
 
         }
+    }
+    public void updateStationPassengerText(){
+        station1PassengerText.setText(Integer.toString(allStations.get(0).getPassWaiting().size()));
+        station2PassengerText.setText(Integer.toString(allStations.get(1).getPassWaiting().size()));
+        station3PassengerText.setText(Integer.toString(allStations.get(2).getPassWaiting().size()));
+        station4PassengerText.setText(Integer.toString(allStations.get(3).getPassWaiting().size()));
+        station5PassengerText.setText(Integer.toString(allStations.get(4).getPassWaiting().size()));
+        station6PassengerText.setText(Integer.toString(allStations.get(5).getPassWaiting().size()));
+        station7PassengerText.setText(Integer.toString(allStations.get(6).getPassWaiting().size()));
+        station8PassengerText.setText(Integer.toString(allStations.get(7).getPassWaiting().size()));
     }
 
     public void checkStop(){
