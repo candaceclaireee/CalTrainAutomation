@@ -152,10 +152,11 @@ public class Main extends Application implements Initializable{
 
    // public void createPassengers() (DELETED TIHS FUNCTION)
 
-    public void addPassenger(int in, int out){//, boolean direction){
+    public void addPassenger(int in, int out, ImageView img){//, boolean direction){
         inStationNum = in;
         totalPassengers++;
         Passenger temp = new Passenger(allStations.get(in-1), c, totalPassengers, allStations.get(out-1));
+        temp.setSprite(img);
         System.out.println(temp);
 //        if(temp.getDirection() != direction){
 //            allStations.get(in).decWaitPass(temp, temp.getDirection());
@@ -237,7 +238,7 @@ public class Main extends Application implements Initializable{
             int threadsReaped = 0;
 
             //min : (passengers waiting, free seats)
-            System.out.println("train "+allTrains.get(i).trainNum+" is in "+allTrains.get(i).getCurrStation().getStationNum()+" with "+allTrains.get(i).getCurrStation().passWaiting.size()+ " waiters");
+            System.out.println("train "+allTrains.get(i).trainNum+" is in station"+(allTrains.get(i).getCurrStation().getStationNum()+1)+" with "+allTrains.get(i).getCurrStation().passWaiting.size()+ " waiters");
             System.out.println("waiters: "+allTrains.get(i).getCurrStation().passWaiting.size()+" MIN available: "+allTrains.get(i).getAvailable());
             threadsToReap = Math.min(allTrains.get(i).getCurrStation().passWaiting.size(),
                                      allTrains.get(i).getAvailable());
@@ -251,6 +252,9 @@ public class Main extends Application implements Initializable{
 
                     if(allTrains.get(i).getCurrStation().passWaiting.size() > 0){ //may nag hihintay
                         System.out.println("pasok 3");
+
+                        // GUI: REMOVED PASSENGER
+                        allTrains.get(i).getCurrStation().passWaiting.get(0).getSprite().setImage(null);
 
                         System.out.println(allTrains.get(i).getCurrStation().getStationNum());
                         boarded = c.station_on_board(allTrains.get(i).getCurrStation(),             //board mo na woooo
@@ -375,7 +379,7 @@ public class Main extends Application implements Initializable{
                 moveTrainToNextStn(imgview, nextStation);
 
                 try {
-                    Thread.sleep(7000);
+                    Thread.sleep(4000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -444,7 +448,7 @@ public class Main extends Application implements Initializable{
             imgview.setLayoutX(value);
             imgview.setLayoutY(220);
             //NEW PASSENGER LOGIC!!!!!!!!!!!!!!!
-            addPassenger(1, Integer.parseInt(station1CapSpin.getValue().toString()));
+            addPassenger(1, Integer.parseInt(station1CapSpin.getValue().toString()), imgview);
         }
         else if (b.getId().compareToIgnoreCase("station2AddButton") == 0){
             int value = rand.nextInt(461-375)+375;
@@ -453,7 +457,7 @@ public class Main extends Application implements Initializable{
 
             imgview.toBack();
 
-            addPassenger(2, Integer.parseInt(station2CapSpin.getValue().toString()));
+            addPassenger(2, Integer.parseInt(station2CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station3AddButton") == 0){
@@ -461,7 +465,7 @@ public class Main extends Application implements Initializable{
             imgview.setLayoutX(value);
             imgview.setLayoutY(220);
 
-            addPassenger(3, Integer.parseInt(station3CapSpin.getValue().toString()));
+            addPassenger(3, Integer.parseInt(station3CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station4AddButton") == 0){
@@ -469,7 +473,7 @@ public class Main extends Application implements Initializable{
             imgview.setLayoutX(value);
             imgview.setLayoutY(220);
 
-            addPassenger(4, Integer.parseInt(station4CapSpin.getValue().toString()));
+            addPassenger(4, Integer.parseInt(station4CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station5AddButton") == 0){
@@ -477,7 +481,7 @@ public class Main extends Application implements Initializable{
             imgview.setLayoutX(value);
             imgview.setLayoutY(537);
 
-            addPassenger(5, Integer.parseInt(station5CapSpin.getValue().toString()));
+            addPassenger(5, Integer.parseInt(station5CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station6AddButton") == 0){
@@ -485,7 +489,7 @@ public class Main extends Application implements Initializable{
             imgview.setLayoutX(value);
             imgview.setLayoutY(537);
 
-            addPassenger(6, Integer.parseInt(station6CapSpin.getValue().toString()));
+            addPassenger(6, Integer.parseInt(station6CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station7AddButton") == 0){
@@ -493,17 +497,17 @@ public class Main extends Application implements Initializable{
             imgview.setLayoutX(value);
             imgview.setLayoutY(537);
 
-            addPassenger(7, Integer.parseInt(station7CapSpin.getValue().toString()));
+            addPassenger(7, Integer.parseInt(station7CapSpin.getValue().toString()), imgview);
 
         }
-        else if (b.getId().compareToIgnoreCase("station8AddButton") == 0){
-            int value = rand.nextInt(998-830)+830;
-            imgview.setLayoutX(value);
-            imgview.setLayoutY(537);
-
-            addPassenger(8, Integer.parseInt(station8CapSpin.getValue().toString()));
-
-        }
+//        else if (b.getId().compareToIgnoreCase("station8AddButton") == 0){
+//            int value = rand.nextInt(998-830)+830;
+//            imgview.setLayoutX(value);
+//            imgview.setLayoutY(537);
+//
+//            addPassenger(8, Integer.parseInt(station8CapSpin.getValue().toString()));
+//
+//        }
 
         transitn.setByX(5);
         transitn.setRate(3);

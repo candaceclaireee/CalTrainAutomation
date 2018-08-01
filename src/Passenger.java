@@ -1,3 +1,5 @@
+import javafx.scene.image.ImageView;
+
 public class Passenger implements Runnable {
     CalTrain sync;
     int passNum;
@@ -5,6 +7,7 @@ public class Passenger implements Runnable {
     Station dest;
     Train trainIn;
     boolean boarded;
+    ImageView sprite;
     Thread passThread = new Thread();
 
     public Passenger(Station src, CalTrain sync, int passNum, Station dest) {
@@ -14,6 +17,7 @@ public class Passenger implements Runnable {
         this.src = src;
         this.dest = dest;
         passThread.start();
+        sprite = null;
     }
     @Override
     public void run() {
@@ -26,6 +30,13 @@ public class Passenger implements Runnable {
 
     public int getPassNum() {
         return passNum;
+    }
+    public void setSprite(ImageView sprite){
+        this.sprite = sprite;
+    }
+
+    public ImageView getSprite(){
+        return sprite;
     }
 
     public void setPassNum(int passNum) {
