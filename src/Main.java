@@ -370,16 +370,19 @@ public class Main extends Application implements Initializable{
 
         Thread thread = new Thread(() -> {
             double nextStation = 0;
+
+            int delay = 3500;
             while (nextStation <= 8){
                 nextStation ++;
                 if (nextStation >= 5){
-                    imgview.setLayoutX(-1300);
+                    imgview.setLayoutX(-1200);
                     imgview.setLayoutY(539);
+                    delay = 3800;
                 }
                 moveTrainToNextStn(imgview, nextStation);
 
                 try {
-                    Thread.sleep(4000);
+                    Thread.sleep(delay);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -403,10 +406,10 @@ public class Main extends Application implements Initializable{
             xPos = 280;
         }
         else if (nextStation == 4){
-            xPos = 250;
+            xPos = 180;
         }
         else if (nextStation == 5){
-            xPos = 220;
+            xPos = 150;
         }
         else if (nextStation == 6){
             xPos = 330;
@@ -420,7 +423,7 @@ public class Main extends Application implements Initializable{
         else if (nextStation == 9) // (CREATED JUST TO REMOVE THE TRAIN FROM GUI)
             xPos = 270;
 
-        TranslateTransition transitn = new TranslateTransition(Duration.millis(4000), imageview);
+        TranslateTransition transitn = new TranslateTransition(Duration.millis(3000), imageview);
         transitn.setFromX(imageview.getTranslateX());
         transitn.setFromY(imageview.getTranslateY());
         transitn.setByX(xPos);
