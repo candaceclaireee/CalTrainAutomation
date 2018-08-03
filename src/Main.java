@@ -193,17 +193,17 @@ public class Main extends Application implements Initializable{
 
 //    public void a() (DELETED THIS FUNCTION)
 
-    public void createTrain(ImageView imgView){
+        public void createTrain(ImageView imgView){
 //        freeSeats = 5; //FROM CAPACITY GUI
-        freeSeats = Integer.parseInt(capacitySpinner.getValue().toString());
-        totalNumSeats += freeSeats;
+            freeSeats = Integer.parseInt(capacitySpinner.getValue().toString());
+            totalNumSeats += freeSeats;
 
-        loadTrainReturned = false;
-        tempTrain = new Train(allStations.get(0), c, freeSeats, trainCtr);
-        tempTrain.setSprite(imgView);
-        loadTrainReturned = true;
-        allTrains.add(tempTrain);
-        trainCtr++;
+            loadTrainReturned = false;
+            tempTrain = new Train(allStations.get(0), c, freeSeats, trainCtr);
+            tempTrain.setSprite(imgView);
+            loadTrainReturned = true;
+            allTrains.add(tempTrain);
+            trainCtr++;
 
         moveTrainToNextStn(tempTrain, 1);
 
@@ -378,18 +378,12 @@ public class Main extends Application implements Initializable{
                 allTrains.remove(i);
 
             }
-            else if (allTrains.get(i).getCurrStation().getStationNum() <= 6){
+            else if (allTrains.get(i).getCurrStation().getStationNum() <= 6) {
                 allTrains.get(i).getCurrStation().setCurrTrain(null);
                 allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
                 allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
                 moveTrainToNextStn(allTrains.get(i), allTrains.get(i).getCurrStation().getStationNum() + 1);
-
             }
-
-
-
-
-
         }
     }
     public void updateStationPassengerText(){
@@ -494,12 +488,16 @@ public class Main extends Application implements Initializable{
         if (nextStation >= 5) {
             train.getSprite().setLayoutX(-1200);
             train.getSprite().setLayoutY(539);
+        }
 
-                }
         if (nextStation == 1) {
             xPos = 220;
+            deploytrain.setOpacity(0.2);
+            deploytrain.setDisable(true);
         } else if (nextStation == 2) {
             xPos = 330;
+            deploytrain.setOpacity(1.0);
+            deploytrain.setDisable(false);
         } else if (nextStation == 3) {
             xPos = 280;
         } else if (nextStation == 4) {
@@ -599,11 +597,8 @@ public class Main extends Application implements Initializable{
             addPassenger(7, Integer.parseInt(station7CapSpin.getValue().toString()), imgview);
 
         }
-
-
         transitn.setByX(10);
         transitn.setRate(3);
-
         transitn.setInterpolator(Interpolator.EASE_IN);
         transitn.setCycleCount(Animation.INDEFINITE);
         transitn.play();
@@ -613,8 +608,6 @@ public class Main extends Application implements Initializable{
 
     public void addLog(String text){
         infoFeed.appendText(text);
-        //infoFeed.appendText(text);
-
     }
 
     public static void main(String[] args) {
