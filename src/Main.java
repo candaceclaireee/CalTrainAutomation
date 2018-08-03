@@ -181,7 +181,7 @@ public class Main extends Application implements Initializable{
         addLog( "[PASSENGER " + totalPassengers +"] Arrived at station " + in + " to station " + out +"\n");
         addLog("-----------------------------------------------------\n");
         threadsCompleted++;
-        updateStationPassengerText();
+//        updateStationPassengerText();
         try {Thread.sleep(300);} catch(Exception e){}
 //        for(int i = 0; i < allStations.size(); i++){
 //            int pass = allStations.get(i).getPassWaiting().size();
@@ -209,7 +209,7 @@ public class Main extends Application implements Initializable{
 //        p.train(allTrains.size(), tempTrain.getRiders().size(), tempTrain.getBoardStation().getStationNum());
 //        t.createTrain(this); //ADD TRAIN GUI
 
-        addLog( "[TRAIN " + allTrains.size() + "] Successfully deployed with capacity " + freeSeats + "\n");
+        addLog( "[NEW TRAIN] Successfully deployed with capacity " + freeSeats + "\n");
         addLog("-----------------------------------------------------\n");
     }
 
@@ -307,6 +307,25 @@ public class Main extends Application implements Initializable{
                 }
             }
 
+            //baba passengers
+            System.out.println(allTrains.get(i));
+            for(int k=0; k<allTrains.get(i).getPassBoarded().size(); k++) {
+                if (allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum())
+                {
+                    allTrains.get(i).getCurrStation().getCurrTrain().setAvailable(allTrains.get(i).getAvailable()-1);
+
+//					System.out.println("Passenger " + t.getRiders().get(k).getPassNum() +
+//									   " leaves Train " + t.getTrainNum() +
+//									   " at Station " + (station.getStationNum() + 1));
+
+                    addLog("[PASSENGER " + allTrains.get(i).getPassBoarded().get(k).getPassNum() +
+                            "] leaves Train " + allTrains.get(i).getTrainNum() +
+                            " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
+                    addLog("-----------------------------------------------------\n");
+                    allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(k).getPassNum());
+                }
+            }
+
             if (allTrains.get(i).getCurrStation().getStationNum() == 7){
                 allTrains.get(i).getCurrStation().setCurrTrain(null);
 //                allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
@@ -320,7 +339,7 @@ public class Main extends Application implements Initializable{
                 allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
             }
 
-            updateStationPassengerText();
+//            updateStationPassengerText();
 
         }
     }
