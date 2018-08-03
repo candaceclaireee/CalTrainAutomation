@@ -181,7 +181,7 @@ public class Main extends Application implements Initializable{
         addLog( "[PASSENGER " + totalPassengers +"] Arrived at station " + in + " to station " + out +"\n");
         addLog("-----------------------------------------------------\n");
         threadsCompleted++;
-//        updateStationPassengerText();
+        updateStationPassengerText();
         try {Thread.sleep(300);} catch(Exception e){}
 //        for(int i = 0; i < allStations.size(); i++){
 //            int pass = allStations.get(i).getPassWaiting().size();
@@ -224,6 +224,7 @@ public class Main extends Application implements Initializable{
                  *
                  */
                 logic();
+                updateStationPassengerText();
             }
         }, 0, 100);
     }
@@ -339,7 +340,6 @@ public class Main extends Application implements Initializable{
                 allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
             }
 
-//            updateStationPassengerText();
 
         }
     }

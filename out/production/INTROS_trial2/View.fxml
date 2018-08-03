@@ -169,5 +169,45 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
+      <Text fx:id="station1PassengerText" layoutX="156.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="station2PassengerText" layoutX="433.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="station3PassengerText" layoutX="714.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="station4PassengerText" layoutX="951.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="station5PassengerText" layoutX="127.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="station6PassengerText" layoutX="427.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="station7PassengerText" layoutX="619.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="station8PassengerText" layoutX="926.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
