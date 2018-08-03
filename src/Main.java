@@ -1,10 +1,10 @@
 import javafx.animation.*;
 import javafx.animation.Animation;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -78,7 +79,7 @@ public class Main extends Application implements Initializable{
     @FXML
     Text station8PassengerText;
 
-    public static Stage primaryStage;
+    public Stage primaryStage;
     public static Pane rootPane;
     public static int numOfTrains = 0;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,7 +162,7 @@ public class Main extends Application implements Initializable{
 //            System.out.println(allStations.get(i).displayNextStations());
         }
         System.out.println("[STATIONS INITIALIZED] \n");
-        addLog("-----------------------------------------------------\n");
+//        addLog("-----------------------------------------------------\n");
     }
 
    // public void createPassengers() (DELETED TIHS FUNCTION)
@@ -178,8 +179,8 @@ public class Main extends Application implements Initializable{
 //            allStations.get(in).addPassenger(temp, direction);
 //        }
         allStations.get(in-1).addPassWaiting(temp);
-        addLog( "[PASSENGER " + totalPassengers +"] Arrived at station " + in + " to station " + out +"\n");
-        addLog("-----------------------------------------------------\n");
+//        addLog( "[PASSENGER " + totalPassengers +"] Arrived at station " + in + " to station " + out +"\n");
+////        addLog("-----------------------------------------------------\n");
         threadsCompleted++;
         //updateStationPassengerText();
         try {Thread.sleep(300);} catch(Exception e){}
@@ -212,8 +213,16 @@ public class Main extends Application implements Initializable{
 //        p.train(allTrains.size(), tempTrain.getRiders().size(), tempTrain.getBoardStation().getStationNum());
 //        t.createTrain(this); //ADD TRAIN GUI
 
-        addLog( "[NEW TRAIN] Successfully deployed with capacity " + freeSeats + "\n");
-        addLog("-----------------------------------------------------\n");
+//        addLog( "[NEW TRAIN] Successfully deployed with capacity " + freeSeats + "\n");
+//        addLog("-----------------------------------------------------\n");
+
+            Platform.runLater(() -> {
+                rootPane.getChildren().add(imgView);
+            });
+
+            numOfTrains++;
+            trainNumber.setText(numOfTrains+"");
+
     }
 
     public void update(){
@@ -259,8 +268,8 @@ public class Main extends Application implements Initializable{
             int threadsReaped = 0;
 
             //min : (passengers waiting, free seats)
-            addLog(("[TRAIN "+(allTrains.get(i).trainNum+1) + "] Currently at station "+(allTrains.get(i).getCurrStation().getStationNum()+1))+"\n");
-            addLog("-----------------------------------------------------\n");
+//            addLog(("[TRAIN "+(allTrains.get(i).trainNum+1) + "] Currently at station "+(allTrains.get(i).getCurrStation().getStationNum()+1))+"\n");
+//            addLog("-----------------------------------------------------\n");
 //            System.out.println("waiters: "+allTrains.get(i).getCurrStation().passWaiting.size()+" MIN available: "+allTrains.get(i).getAvailable());
             threadsToReap = Math.min(allTrains.get(i).getCurrStation().passWaiting.size(),
                                      allTrains.get(i).getAvailable());
@@ -314,30 +323,6 @@ public class Main extends Application implements Initializable{
 
             //baba passengers
             System.out.println("train num: "+allTrains.get(i).getTrainNum()+" passengers: "+allTrains.get(i).getPassBoarded().size());
-//            int k=0;
-//            while(allTrains.get(i).getPassBoarded().size() !=0){
-//                System.out.println(k);
-//                System.out.println("DEST: "+allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum()+" CURR: "+allTrains.get(i).getCurrStation().getStationNum());
-//
-//                if (allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum())
-//                {
-//                    System.out.println(allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum());
-//                    allTrains.get(i).getCurrStation().getCurrTrain().setAvailable(allTrains.get(i).getAvailable()+1);
-//
-//                    System.out.println("[PASSENGER " + allTrains.get(i).getPassBoarded().get(k).getPassNum() +
-//                            "] leaves Train " + allTrains.get(i).getTrainNum() +
-//                            " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1));
-//
-////                    addLog("[PASSENGER " + allTrains.get(i).getPassBoarded().get(k).getPassNum() +
-////                            "] leaves Train " + allTrains.get(i).getTrainNum() +
-////                            " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
-////                    addLog("-----------------------------------------------------\n");
-//                    allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(0).getPassNum());
-//
-//                    System.out.println(" passengers: "+allTrains.get(i).getPassBoarded().size());
-//                }
-//                k++;
-//            }
             ArrayList <Integer> removeThese = new ArrayList<Integer>();
             for(int k=0; k<allTrains.get(i).getPassBoarded().size(); k++) {
                 System.out.println(k);
@@ -346,7 +331,7 @@ public class Main extends Application implements Initializable{
                 if (allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum())
                 {
                     System.out.println(allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum());
-                    allTrains.get(i).getCurrStation().getCurrTrain().setAvailable(allTrains.get(i).getAvailable()+1);
+                    allTrains.get(i).getCurrStation().getCurrTrain().setAvailable(allTrains.get(i).getAvailable()+1); //NULL POINTER
                     allTrains.get(i).getPassBoarded().get(k).setBoarded(false);
                     System.out.println(allTrains.get(i).getPassBoarded().get(k).isBoarded());
                     removeThese.add(k);
@@ -355,10 +340,10 @@ public class Main extends Application implements Initializable{
 
             for (int j=0; j<removeThese.size(); j++){
 
-                addLog("[PASSENGER " + allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum() +
-                        "] leaves Train " + allTrains.get(i).getTrainNum() +
-                        " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
-                addLog("-----------------------------------------------------\n");
+//                addLog("[PASSENGER " + allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum() +
+//                        "] leaves Train " + allTrains.get(i).getTrainNum() +
+//                        " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
+//                addLog("-----------------------------------------------------\n");
 
                 allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum());
 
@@ -376,7 +361,6 @@ public class Main extends Application implements Initializable{
 //                allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
                   moveTrainToNextStn(allTrains.get(i), allTrains.get(i).getCurrStation().getStationNum() + 2);
                 allTrains.remove(i);
-
             }
             else if (allTrains.get(i).getCurrStation().getStationNum() <= 6) {
                 allTrains.get(i).getCurrStation().setCurrTrain(null);
@@ -428,21 +412,25 @@ public class Main extends Application implements Initializable{
 ////////////////////////////////////////////////////////////////
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage)  {
         this.primaryStage = primaryStage;
         rootPane = new Pane();
 
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View.fxml"));
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("View.fxml"));
+        } catch (IOException e) {
+        }
 
         primaryStage.setTitle("CalTrainII Automation (Process Synchronization)");
         primaryStage.setResizable(false);
         rootPane.getChildren().add(root);
         primaryStage.setScene(new Scene(rootPane, 1360, 690));
         primaryStage.show();
-    }
+}
 
     @FXML
-    public void newTrain() throws Exception{
+    public void newTrain(){
         ImageView imgview = new ImageView();
         File file = new File("src/res/cutetrain.png");
         Image image = new Image(file.toURI().toString());
@@ -456,7 +444,6 @@ public class Main extends Application implements Initializable{
 
         //NEW TRAIN LOGIC!!!!!!!!!!!!!!!!
         createTrain(imgview);
-
 
 //        Thread thread = new Thread(() -> {
 //            double nextStation = 0;
@@ -475,9 +462,6 @@ public class Main extends Application implements Initializable{
 //            }
 //        });
 //        thread.start();
-        rootPane.getChildren().add(imgview);
-        numOfTrains++;
-        trainNumber.setText(numOfTrains+"");
         //moveTrainToNextStn(imgview, 1);
     }
 
@@ -499,9 +483,9 @@ public class Main extends Application implements Initializable{
             deploytrain.setOpacity(1.0);
             deploytrain.setDisable(false);
         } else if (nextStation == 3) {
-            xPos = 280;
+            xPos = 220;
         } else if (nextStation == 4) {
-            xPos = 180;
+            xPos = 240;
         } else if (nextStation == 5) {
             xPos = 150;
         } else if (nextStation == 6) {
@@ -513,7 +497,6 @@ public class Main extends Application implements Initializable{
         } else if (nextStation == 9) {// (CREATED JUST TO REMOVE THE TRAIN FROM GUI)
             xPos = 270;
             train.getSprite().setVisible(false);
-
         }
 
         TranslateTransition transitn = new TranslateTransition(Duration.millis(3000), train.getSprite());
@@ -523,12 +506,10 @@ public class Main extends Application implements Initializable{
         transitn.setRate(2);
         transitn.setInterpolator(Interpolator.LINEAR);
         transitn.play();
-
     }
 
     @FXML
     public void addPassenger(Button b)  {
-
         ImageView imgview = new ImageView();
         File file = new File("src/res/robot1.png");
         Image image = new Image(file.toURI().toString());
@@ -606,9 +587,9 @@ public class Main extends Application implements Initializable{
         rootPane.getChildren().add(imgview);
     }
 
-    public void addLog(String text){
-        infoFeed.appendText(text);
-    }
+//    public void addLog(String text){
+//        infoFeed.appendText(text);
+//    }
 
     public static void main(String[] args) {
         launch(args);

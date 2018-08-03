@@ -15,13 +15,13 @@ public class Train implements Runnable {
     Thread trainThread = new Thread();
 
     public Train(Station currStation, CalTrain sync, int capacity, int trainNum) {
-        this.sync = sync;
-        this.trainNum = trainNum;
-        this.capacity = capacity;
-        this.available = capacity;
-        this.currStation = currStation;
-        this.taken = 0;
-        continueRun = true;
+            this.sync = sync;
+            this.trainNum = trainNum;
+            this.capacity = capacity;
+            this.available = capacity;
+            this.currStation = currStation;
+            this.taken = 0;
+            continueRun = true;
         trainThread.start();
         sprite = null;
     }
