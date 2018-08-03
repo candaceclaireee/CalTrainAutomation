@@ -182,7 +182,7 @@ public class Main extends Application implements Initializable{
 //        addLog( "[PASSENGER " + totalPassengers +"] Arrived at station " + in + " to station " + out +"\n");
 ////        addLog("-----------------------------------------------------\n");
         threadsCompleted++;
-        //updateStationPassengerText();
+        updateStationPassengerText();
         try {Thread.sleep(300);} catch(Exception e){}
 //        for(int i = 0; i < allStations.size(); i++){
 //            int pass = allStations.get(i).getPassWaiting().size();
@@ -236,7 +236,7 @@ public class Main extends Application implements Initializable{
                  *
                  */
                 logic();
-//                updateStationPassengerText();
+                updateStationPassengerText();
 
             }
         }, 0, 100);
@@ -264,6 +264,40 @@ public class Main extends Application implements Initializable{
 //
 //            boolean tempDirection = allTrains.get(i).getDirection();
 
+
+
+
+
+            //baba passengers
+            System.out.println("train num: "+allTrains.get(i).getTrainNum()+" passengers: "+allTrains.get(i).getPassBoarded().size());
+            ArrayList <Integer> removeThese = new ArrayList<Integer>();
+            for(int k=0; k<allTrains.get(i).getPassBoarded().size(); k++) {
+                System.out.println(k);
+                System.out.println("DEST: "+allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum()+" CURR: "+allTrains.get(i).getCurrStation().getStationNum());
+
+                if (allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum())
+                {
+                    dropPassengerOff(allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum()); ////////
+                    System.out.println(allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum());
+                    allTrains.get(i).getCurrStation().getCurrTrain().setAvailable(allTrains.get(i).getAvailable()+1); //NULL POINTER
+                    allTrains.get(i).getPassBoarded().get(k).setBoarded(false);
+                    System.out.println(allTrains.get(i).getPassBoarded().get(k).isBoarded());
+                    removeThese.add(k);
+                }
+            }
+            for (int j=0; j<removeThese.size(); j++){
+                System.out.println("[PASSENGER " + allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum() +
+                        "] leaves Train " + allTrains.get(i).getTrainNum() +
+                        " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
+                System.out.println("-----------------------------------------------------\n");
+
+                allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum());
+            }
+
+            removeThese.clear();
+
+
+
             int threadsToReap = -1;
             int threadsReaped = 0;
 
@@ -272,7 +306,8 @@ public class Main extends Application implements Initializable{
 //            addLog("-----------------------------------------------------\n");
 //            System.out.println("waiters: "+allTrains.get(i).getCurrStation().passWaiting.size()+" MIN available: "+allTrains.get(i).getAvailable());
             threadsToReap = Math.min(allTrains.get(i).getCurrStation().passWaiting.size(),
-                                     allTrains.get(i).getAvailable());
+                    allTrains.get(i).getAvailable());
+
 
             while(threadsReaped < threadsToReap) {
                 System.out.println(threadsReaped +" < "+ threadsToReap);
@@ -292,7 +327,6 @@ public class Main extends Application implements Initializable{
                                                      allTrains.get(i).getCurrStation().passWaiting.get(0),
                                                     threadsReaped + 1 == threadsToReap);
                     }
-
                     if(boarded) {
                         System.out.println("boarded");
                         threadsReaped++;
@@ -321,36 +355,6 @@ public class Main extends Application implements Initializable{
                 }
             }
 
-            //baba passengers
-            System.out.println("train num: "+allTrains.get(i).getTrainNum()+" passengers: "+allTrains.get(i).getPassBoarded().size());
-            ArrayList <Integer> removeThese = new ArrayList<Integer>();
-            for(int k=0; k<allTrains.get(i).getPassBoarded().size(); k++) {
-                System.out.println(k);
-                System.out.println("DEST: "+allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum()+" CURR: "+allTrains.get(i).getCurrStation().getStationNum());
-
-                if (allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum())
-                {
-                    System.out.println(allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum());
-                    allTrains.get(i).getCurrStation().getCurrTrain().setAvailable(allTrains.get(i).getAvailable()+1); //NULL POINTER
-                    allTrains.get(i).getPassBoarded().get(k).setBoarded(false);
-                    System.out.println(allTrains.get(i).getPassBoarded().get(k).isBoarded());
-                    removeThese.add(k);
-                }
-            }
-
-            for (int j=0; j<removeThese.size(); j++){
-
-//                addLog("[PASSENGER " + allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum() +
-//                        "] leaves Train " + allTrains.get(i).getTrainNum() +
-//                        " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
-//                addLog("-----------------------------------------------------\n");
-
-                allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum());
-
-            }
-
-            removeThese.clear();
-
 //            System.out.println("moving train");
 //            System.out.println(i);
 //            System.out.println(allTrains.get(i).getCurrStation().stationNum + 1);
@@ -363,10 +367,15 @@ public class Main extends Application implements Initializable{
                 allTrains.remove(i);
             }
             else if (allTrains.get(i).getCurrStation().getStationNum() <= 6) {
-                allTrains.get(i).getCurrStation().setCurrTrain(null);
-                allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
-                allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
-                moveTrainToNextStn(allTrains.get(i), allTrains.get(i).getCurrStation().getStationNum() + 1);
+
+                if (allTrains.get(i).getCurrStation().getNextStation().getCurrTrain()!=null){
+                }
+                else {
+                    allTrains.get(i).getCurrStation().setCurrTrain(null);
+                    allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
+                    allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
+                    moveTrainToNextStn(allTrains.get(i), allTrains.get(i).getCurrStation().getStationNum() + 1);
+                }
             }
         }
     }
@@ -425,7 +434,7 @@ public class Main extends Application implements Initializable{
         primaryStage.setTitle("CalTrainII Automation (Process Synchronization)");
         primaryStage.setResizable(false);
         rootPane.getChildren().add(root);
-        primaryStage.setScene(new Scene(rootPane, 1360, 690));
+        primaryStage.setScene(new Scene(rootPane, 1064, 690));
         primaryStage.show();
 }
 
@@ -586,10 +595,90 @@ public class Main extends Application implements Initializable{
 
         rootPane.getChildren().add(imgview);
     }
+    public void dropPassengerOff(int station){
+        ImageView imgview = new ImageView();
+        File file = new File("src/res/robot2.png");
+        Image image = new Image(file.toURI().toString());
+        imgview.setImage(image);
+        imgview.setFitHeight(50);
+        imgview.setFitWidth(48);
 
-//    public void addLog(String text){
-//        infoFeed.appendText(text);
-//    }
+        TranslateTransition transitn = new TranslateTransition(Duration.millis(4000), imgview);
+
+        Random rand = new Random();
+
+        if (station == 1) {
+            int value = rand.nextInt(461-375)+375;
+            imgview.setLayoutX(value);
+            imgview.setLayoutY(220);
+
+            try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
+            transitn.setByY(-300);
+        }
+        else if (station == 2){
+            int value = rand.nextInt(760-635)+635;
+            imgview.setLayoutX(value);
+            imgview.setLayoutY(220);
+
+            try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
+            transitn.setByY(-300);
+        }
+        else if (station == 3) {
+            int value = rand.nextInt(945-905)+905;
+            imgview.setLayoutX(value);
+            imgview.setLayoutY(220);
+
+            try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
+            transitn.setByY(-300);
+        }
+        else if (station == 4){
+            int value = rand.nextInt(170-35)+35;
+            imgview.setLayoutX(value);
+            imgview.setLayoutY(537);
+
+            try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
+            transitn.setByY(-700);
+        }
+        else if (station == 5) {
+            int value = rand.nextInt(454-334)+334;
+            imgview.setLayoutX(value);
+            imgview.setLayoutY(537);
+
+            try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
+            transitn.setByY(-700);
+        }
+        else if (station == 6) {
+            int value = rand.nextInt(697-619)+619;
+            imgview.setLayoutX(value);
+            imgview.setLayoutY(537);
+
+            try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
+            transitn.setByY(-700);
+        }
+        else if (station == 7) {
+            int value = rand.nextInt(934-817)+817;
+            imgview.setLayoutX(value);
+            imgview.setLayoutY(537);
+
+            try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
+            transitn.setByY(-700);
+        }
+
+        transitn.setByX(10);
+        transitn.setRate(3);
+        transitn.setInterpolator(Interpolator.EASE_IN);
+        transitn.play();
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                rootPane.getChildren().add(imgview);
+            }
+        });
+
+
+    }
+
 
     public static void main(String[] args) {
         launch(args);
