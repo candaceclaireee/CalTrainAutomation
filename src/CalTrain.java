@@ -147,6 +147,7 @@ public class CalTrain {
             station.deletePassWaiting(pass.getPassNum());
 //            station.decStandPass(pass.getDirection()); //DEC TAKEN WHY??
             station.getCurrTrain().setAvailable(station.getCurrTrain().getAvailable()-1);
+            pass.setBoarded(true);
             station.getOn_board().unlock();
 
             /* Passenger signals station that he/she is seated on the train */

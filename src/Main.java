@@ -261,19 +261,19 @@ public class Main extends Application implements Initializable{
             //min : (passengers waiting, free seats)
             addLog(("[TRAIN "+(allTrains.get(i).trainNum+1) + "] Currently at station "+(allTrains.get(i).getCurrStation().getStationNum()+1))+"\n");
             addLog("-----------------------------------------------------\n");
-            System.out.println("waiters: "+allTrains.get(i).getCurrStation().passWaiting.size()+" MIN available: "+allTrains.get(i).getAvailable());
+//            System.out.println("waiters: "+allTrains.get(i).getCurrStation().passWaiting.size()+" MIN available: "+allTrains.get(i).getAvailable());
             threadsToReap = Math.min(allTrains.get(i).getCurrStation().passWaiting.size(),
                                      allTrains.get(i).getAvailable());
 
             while(threadsReaped < threadsToReap) {
                 System.out.println(threadsReaped +" < "+ threadsToReap);
-                System.out.println("pasok 1");
+//                System.out.println("pasok 1");
                 boolean boarded = false;
                 if(threadsCompleted > 0) {
-                    System.out.println("pasok 2");
+//                    System.out.println("pasok 2");
 
                     if(allTrains.get(i).getCurrStation().passWaiting.size() > 0){ //may nag hihintay
-                        System.out.println("pasok 3");
+//                        System.out.println("pasok 3");
 
                         // GUI: REMOVED PASSENGER
                         allTrains.get(i).getCurrStation().passWaiting.get(0).getSprite().setImage(null);
@@ -313,27 +313,62 @@ public class Main extends Application implements Initializable{
             }
 
             //baba passengers
-            System.out.println(allTrains.get(i));
+            System.out.println("train num: "+allTrains.get(i).getTrainNum()+" passengers: "+allTrains.get(i).getPassBoarded().size());
+//            int k=0;
+//            while(allTrains.get(i).getPassBoarded().size() !=0){
+//                System.out.println(k);
+//                System.out.println("DEST: "+allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum()+" CURR: "+allTrains.get(i).getCurrStation().getStationNum());
+//
+//                if (allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum())
+//                {
+//                    System.out.println(allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum());
+//                    allTrains.get(i).getCurrStation().getCurrTrain().setAvailable(allTrains.get(i).getAvailable()+1);
+//
+//                    System.out.println("[PASSENGER " + allTrains.get(i).getPassBoarded().get(k).getPassNum() +
+//                            "] leaves Train " + allTrains.get(i).getTrainNum() +
+//                            " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1));
+//
+////                    addLog("[PASSENGER " + allTrains.get(i).getPassBoarded().get(k).getPassNum() +
+////                            "] leaves Train " + allTrains.get(i).getTrainNum() +
+////                            " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
+////                    addLog("-----------------------------------------------------\n");
+//                    allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(0).getPassNum());
+//
+//                    System.out.println(" passengers: "+allTrains.get(i).getPassBoarded().size());
+//                }
+//                k++;
+//            }
+            ArrayList <Integer> removeThese = new ArrayList<Integer>();
             for(int k=0; k<allTrains.get(i).getPassBoarded().size(); k++) {
+                System.out.println(k);
+                System.out.println("DEST: "+allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum()+" CURR: "+allTrains.get(i).getCurrStation().getStationNum());
+
                 if (allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum())
                 {
+                    System.out.println(allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum());
                     allTrains.get(i).getCurrStation().getCurrTrain().setAvailable(allTrains.get(i).getAvailable()+1);
-
-//					System.out.println("Passenger " + t.getRiders().get(k).getPassNum() +
-//									   " leaves Train " + t.getTrainNum() +
-//									   " at Station " + (station.getStationNum() + 1));
-
-                    addLog("[PASSENGER " + allTrains.get(i).getPassBoarded().get(k).getPassNum() +
-                            "] leaves Train " + allTrains.get(i).getTrainNum() +
-                            " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
-                    addLog("-----------------------------------------------------\n");
-                    allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(k).getPassNum());
+                    allTrains.get(i).getPassBoarded().get(k).setBoarded(false);
+                    System.out.println(allTrains.get(i).getPassBoarded().get(k).isBoarded());
+                    removeThese.add(k);
                 }
             }
 
+            for (int j=0; j<removeThese.size(); j++){
+
+                addLog("[PASSENGER " + allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum() +
+                        "] leaves Train " + allTrains.get(i).getTrainNum() +
+                        " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
+                addLog("-----------------------------------------------------\n");
+
+                allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum());
+
+            }
+
+            removeThese.clear();
+
 //            System.out.println("moving train");
 //            System.out.println(i);
-            System.out.println(allTrains.get(i).getCurrStation().stationNum + 1);
+//            System.out.println(allTrains.get(i).getCurrStation().stationNum + 1);
 
             if (allTrains.get(i).getCurrStation().getStationNum() == 7){
                 allTrains.get(i).getCurrStation().setCurrTrain(null);
@@ -455,7 +490,7 @@ public class Main extends Application implements Initializable{
     public void moveTrainToNextStn(Train train, double nextStation) {
         double xPos = 0;
 
-        System.out.println(nextStation);
+//        System.out.println(nextStation);
         if (nextStation >= 5) {
             train.getSprite().setLayoutX(-1200);
             train.getSprite().setLayoutY(539);
