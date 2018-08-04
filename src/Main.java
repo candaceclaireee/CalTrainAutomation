@@ -272,7 +272,7 @@ public class Main extends Application implements Initializable{
             System.out.println("train num: "+allTrains.get(i).getTrainNum()+" passengers: "+allTrains.get(i).getPassBoarded().size());
             ArrayList <Integer> removeThese = new ArrayList<Integer>();
             for(int k=0; k<allTrains.get(i).getPassBoarded().size(); k++) {
-                System.out.println(k);
+                System.out.println("k: "+k);
                 System.out.println("DEST: "+allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum()+" CURR: "+allTrains.get(i).getCurrStation().getStationNum());
 
                 if (allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum() ==  allTrains.get(i).getCurrStation().getStationNum())
@@ -286,12 +286,30 @@ public class Main extends Application implements Initializable{
                 }
             }
             for (int j=0; j<removeThese.size(); j++){
-                System.out.println("[PASSENGER " + allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum() +
+                System.out.println("trains size: "+allTrains.size());
+                System.out.println("remove these size: "+removeThese.size());
+//                if (removeThese.size()!=0){
+//
+//                    System.out.println("j: "+j);
+//
+//                    allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(removeThese.get(j)).getPassNum());
+//
+//                    System.out.println("[PASSENGER " + allTrains.get(i).getPassBoarded().get(removeThese.get(j)).getPassNum() +
+//                            "] leaves Train " + allTrains.get(i).getTrainNum() +
+//                            " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
+//                    System.out.println("-----------------------------------------------------\n");
+//                }
+
+//                j--;
+
+                System.out.println("j: "+j);
+//
+                allTrains.get(i).deletePassBoarded(removeThese.get(j));
+
+                System.out.println("[PASSENGER " + removeThese.get(j) +
                         "] leaves Train " + allTrains.get(i).getTrainNum() +
                         " at Station " + ( allTrains.get(i).getCurrStation().getStationNum() + 1)+"\n");
                 System.out.println("-----------------------------------------------------\n");
-
-                allTrains.get(i).deletePassBoarded(allTrains.get(i).getPassBoarded().get(allTrains.get(i).getPassBoarded().size()-1).getPassNum());
             }
 
             removeThese.clear();
