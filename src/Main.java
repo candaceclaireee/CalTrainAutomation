@@ -55,8 +55,6 @@ public class Main extends Application implements Initializable{
     @FXML
     javafx.scene.control.Spinner station8CapSpin;
     @FXML
-    javafx.scene.control.TextArea infoFeed;
-    @FXML
     Text trainNumber;
     @FXML
     Spinner capacitySpinner;
@@ -89,22 +87,16 @@ public class Main extends Application implements Initializable{
 
     int totalPassengers = 0;
     int passengersLeft = totalPassengers;	// Passengers left to be picked up
-//    int passengersServed = totalPassengers;	// Passengers who haven't arrived to their destination
-//    boolean trainsReturned = true;			// If trains haven't returned to Station 0
 
     /* Program running-related variables */
     int totalPassengersBoarded = 0;
     int totalNumSeats = 0;
     int threadsCompleted = 0;
-//    int maxFreeSeats = 5;
     int trainCtr = 0;
-//    int passCtr = 10;
-//    int maxInsert = 0;
     boolean loadTrainReturned = false;
 
     /* Temporary Variables */
     int inStationNum, freeSeats;
-    Passenger tempRobot;
     Train tempTrain;
     public static int currentTrain = 0;
     public static int totalPassServed = 0;
@@ -153,9 +145,9 @@ public class Main extends Application implements Initializable{
 
     public void createStations(){
         passLeft = 0;
-        for(int i=0;i<8;i++) {
+        for(int i=0;i<16;i++) {
             allStations.add(c.station_init(i));
-            if (i >= 1 && i < 8) {
+            if (i >= 1 && i < 16) {
                 allStations.get(i-1).setNextStation(allStations.get(i));
 //                allStations.get(i).setLeftStation(allStations.get(i-1));
             }
@@ -165,19 +157,13 @@ public class Main extends Application implements Initializable{
 //        addLog("-----------------------------------------------------\n");
     }
 
-   // public void createPassengers() (DELETED TIHS FUNCTION)
-
     public void addPassenger(int in, int out, ImageView img){//, boolean direction){
         inStationNum = in;
         totalPassengers++;
         Passenger temp = new Passenger(allStations.get(in-1), c, totalPassengers, allStations.get(out-1));
         temp.setSprite(img);
         System.out.println(temp);
-//        if(temp.getDirection() != direction){
-//            allStations.get(in).decWaitPass(temp, temp.getDirection());
-//            temp.setDirection(direction);
-//            allStations.get(in).addPassenger(temp, direction);
-//        }
+
         allStations.get(in-1).addPassWaiting(temp);
 //        addLog( "[PASSENGER " + totalPassengers +"] Arrived at station " + in + " to station " + out +"\n");
 ////        addLog("-----------------------------------------------------\n");
@@ -191,8 +177,6 @@ public class Main extends Application implements Initializable{
 //            System.out.println("Station: " + (i + 1) + " Passengers: " + pass);
 //        }
     }
-
-//    public void a() (DELETED THIS FUNCTION)
 
         public void createTrain(ImageView imgView){
 //        freeSeats = 5; //FROM CAPACITY GUI
@@ -208,7 +192,7 @@ public class Main extends Application implements Initializable{
 
         moveTrainToNextStn(tempTrain, 1);
 
-        allStations.get(0).setCurrTrain(tempTrain); //NEW ADDED BY CHESIE
+        allStations.get(0).setCurrTrain(tempTrain);
 
 //        p.train(allTrains.size(), tempTrain.getRiders().size(), tempTrain.getBoardStation().getStationNum());
 //        t.createTrain(this); //ADD TRAIN GUI
@@ -222,7 +206,6 @@ public class Main extends Application implements Initializable{
 
             numOfTrains++;
             trainNumber.setText(numOfTrains+"");
-
     }
 
     public void update(){
@@ -248,27 +231,6 @@ public class Main extends Application implements Initializable{
 
             try{Thread.sleep(2500);} catch(Exception e) {e.printStackTrace();}
 
-//            if(pause){
-//                try{
-//                    System.out.println("Threads are asleep");
-//                    Thread.sleep(p.a.getTime());
-//                }
-//                catch(Exception e){
-//                    e.printStackTrace();
-//                }
-//                finally{
-//                    pause = false;
-//                    t.getAnim(i).start();
-//                }
-//            }
-//
-//            boolean tempDirection = allTrains.get(i).getDirection();
-
-
-
-
-
-            //baba passengers
             System.out.println("train num: "+allTrains.get(i).getTrainNum()+" passengers: "+allTrains.get(i).getPassBoarded().size());
             ArrayList <Integer> removeThese = new ArrayList<Integer>();
             for(int k=0; k<allTrains.get(i).getPassBoarded().size(); k++) {
@@ -314,8 +276,6 @@ public class Main extends Application implements Initializable{
 
             removeThese.clear();
 
-
-
             int threadsToReap = -1;
             int threadsReaped = 0;
 
@@ -325,7 +285,6 @@ public class Main extends Application implements Initializable{
 //            System.out.println("waiters: "+allTrains.get(i).getCurrStation().passWaiting.size()+" MIN available: "+allTrains.get(i).getAvailable());
             threadsToReap = Math.min(allTrains.get(i).getCurrStation().passWaiting.size(),
                     allTrains.get(i).getAvailable());
-
 
             while(threadsReaped < threadsToReap) {
                 System.out.println(threadsReaped +" < "+ threadsToReap);
@@ -365,8 +324,6 @@ public class Main extends Application implements Initializable{
                 System.out.println("Train " + allTrains.get(i).getTrainNum() + " is decommissioned.");
                 decommissioned++;
                 allTrains.remove(allTrains.get(i));
-//                t.anims.remove(i);
-//                t.trains.remove(i);
                 i--;
                 if (allTrains.size() == 0) {
                     System.out.println("All trains are gone!");
@@ -377,14 +334,15 @@ public class Main extends Application implements Initializable{
 //            System.out.println(i);
 //            System.out.println(allTrains.get(i).getCurrStation().stationNum + 1);
 
-            if (allTrains.get(i).getCurrStation().getStationNum() == 7){
+            if (allTrains.get(i).getCurrStation().getStationNum() == 15){
                 allTrains.get(i).getCurrStation().setCurrTrain(null);
-//                allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
-//                allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
-                  moveTrainToNextStn(allTrains.get(i), allTrains.get(i).getCurrStation().getStationNum() + 2);
+//              allTrains.get(i).setCurrStation(allTrains.get(i).getCurrStation().getNextStation());
+//              allTrains.get(i).getCurrStation().setCurrTrain(allTrains.get(i));
+                moveTrainToNextStn(allTrains.get(i), allTrains.get(i).getCurrStation().getStationNum() + 2);
+
                 allTrains.remove(i);
             }
-            else if (allTrains.get(i).getCurrStation().getStationNum() <= 6) {
+            else if (allTrains.get(i).getCurrStation().getStationNum() <= 14) {
 
                 if (allTrains.get(i).getCurrStation().getNextStation().getCurrTrain()!=null){
                 }
@@ -452,7 +410,7 @@ public class Main extends Application implements Initializable{
         primaryStage.setTitle("CalTrainII Automation (Process Synchronization)");
         primaryStage.setResizable(false);
         rootPane.getChildren().add(root);
-        primaryStage.setScene(new Scene(rootPane, 1064, 690));
+        primaryStage.setScene(new Scene(rootPane, 1360, 690));
         primaryStage.show();
 }
 
@@ -463,66 +421,63 @@ public class Main extends Application implements Initializable{
         Image image = new Image(file.toURI().toString());
 
         imgview.setImage(image);
-        imgview.setFitHeight(52);
-        imgview.setFitWidth(210);
+        imgview.setFitHeight(40);
+        imgview.setFitWidth(170);
         imgview.setLayoutX(-200);
-        imgview.setLayoutY(220);
+        imgview.setLayoutY(235);
         imgview.toFront();
 
-        //NEW TRAIN LOGIC!!!!!!!!!!!!!!!!
         createTrain(imgview);
 
-//        Thread thread = new Thread(() -> {
-//            double nextStation = 0;
-//
-//            int delay = 3500;
-//            while (nextStation <= 8){
-//                nextStation ++;
-//
-//                moveTrainToNextStn(imgview, nextStation);
-//
-//                try {
-//                    Thread.sleep(delay);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        thread.start();
-        //moveTrainToNextStn(imgview, 1);
     }
 
     public void moveTrainToNextStn(Train train, double nextStation) {
         double xPos = 0;
 
 //        System.out.println(nextStation);
-        if (nextStation >= 5) {
-            train.getSprite().setLayoutX(-1200);
-            train.getSprite().setLayoutY(539);
+        if (nextStation >= 9) {
+            train.getSprite().setLayoutX(-1600);
+            train.getSprite().setLayoutY(552);
         }
 
         if (nextStation == 1) {
-            xPos = 220;
+            xPos = 165;
             deploytrain.setOpacity(0.2);
             deploytrain.setDisable(true);
-        } else if (nextStation == 2) {
-            xPos = 330;
+        } else if (nextStation == 2) {  //NO STATION HERE
+            xPos = 184;
             deploytrain.setOpacity(1.0);
             deploytrain.setDisable(false);
         } else if (nextStation == 3) {
-            xPos = 220;
-        } else if (nextStation == 4) {
-            xPos = 240;
+            xPos = 190;
+        } else if (nextStation == 4) { //NO STATION HERE
+            xPos = 180;
         } else if (nextStation == 5) {
-            xPos = 150;
-        } else if (nextStation == 6) {
-            xPos = 330;
+            xPos = 188;
+        } else if (nextStation == 6) { //NO STATION HERE
+            xPos = 186;
         } else if (nextStation == 7) {
-            xPos = 260;
-        } else if (nextStation == 8) {
-            xPos = 230;
-        } else if (nextStation == 9) {// (CREATED JUST TO REMOVE THE TRAIN FROM GUI)
-            xPos = 270;
+            xPos = 170;
+        } else if (nextStation == 8) { //NO STATION HERE
+            xPos = 170;
+        } else if (nextStation == 9) {
+            xPos = 150;
+        } else if (nextStation == 10) {
+            xPos = 178;
+        } else if (nextStation == 11) {
+            xPos = 180;
+        } else if (nextStation == 12) {
+            xPos = 180;
+        } else if (nextStation == 13) {
+            xPos = 180;
+        } else if (nextStation == 14) {
+            xPos = 180;
+        } else if (nextStation == 15) {
+            xPos = 180;
+        } else if (nextStation == 16) {
+            xPos = 180;
+        } else if (nextStation == 17) {// (CREATED JUST TO REMOVE THE TRAIN FROM GUI)
+            xPos = 180;
             train.getSprite().setVisible(false);
         }
 
@@ -541,66 +496,63 @@ public class Main extends Application implements Initializable{
         File file = new File("src/res/robot1.png");
         Image image = new Image(file.toURI().toString());
         imgview.setImage(image);
-        imgview.setFitHeight(46);
-        imgview.setFitWidth(48);
+        imgview.setFitHeight(42);
+        imgview.setFitWidth(46);
 
         TranslateTransition transitn = new TranslateTransition(Duration.millis(4000), imgview);
 
         Random rand = new Random();
 
         if (b.getId().compareToIgnoreCase("station1AddButton") == 0) {
-            int value = rand.nextInt(215-50)+50;
+            int value = rand.nextInt(131-10)+10;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(220);
-            //NEW PASSENGER LOGIC!!!!!!!!!!!!!!!
+            imgview.setLayoutY(227);
             addPassenger(1, Integer.parseInt(station1CapSpin.getValue().toString()), imgview);
         }
         else if (b.getId().compareToIgnoreCase("station2AddButton") == 0){
-            int value = rand.nextInt(461-375)+375;
+            int value = rand.nextInt(470-379)+379;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(220);
-
-            imgview.toBack();
+            imgview.setLayoutY(227);
 
             addPassenger(2, Integer.parseInt(station2CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station3AddButton") == 0){
-            int value = rand.nextInt(760-635)+635;
+            int value = rand.nextInt(820-700)+700;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(220);
+            imgview.setLayoutY(227);
 
             addPassenger(3, Integer.parseInt(station3CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station4AddButton") == 0){
-            int value = rand.nextInt(945-905)+905;
+            int value = rand.nextInt(1150-1080)+1080;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(220);
+            imgview.setLayoutY(227);
 
             addPassenger(4, Integer.parseInt(station4CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station5AddButton") == 0){
-            int value = rand.nextInt(170-35)+35;
+            int value = rand.nextInt(150-10)+10;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(537);
+            imgview.setLayoutY(541);
 
             addPassenger(5, Integer.parseInt(station5CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station6AddButton") == 0){
-            int value = rand.nextInt(454-334)+334;
+            int value = rand.nextInt(480-330)+330;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(537);
+            imgview.setLayoutY(541);
 
             addPassenger(6, Integer.parseInt(station6CapSpin.getValue().toString()), imgview);
 
         }
         else if (b.getId().compareToIgnoreCase("station7AddButton") == 0){
-            int value = rand.nextInt(697-619)+619;
+            int value = rand.nextInt(770-680)+680;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(537);
+            imgview.setLayoutY(541);
 
             addPassenger(7, Integer.parseInt(station7CapSpin.getValue().toString()), imgview);
 
@@ -626,57 +578,57 @@ public class Main extends Application implements Initializable{
         Random rand = new Random();
 
         if (station == 1) {
-            int value = rand.nextInt(461-375)+375;
+            int value = rand.nextInt(470-379)+379;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(220);
-
+            imgview.setLayoutY(227);
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-300);
         }
         else if (station == 2){
-            int value = rand.nextInt(760-635)+635;
+            int value = rand.nextInt(820-700)+700;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(220);
+            imgview.setLayoutY(227);
 
+            
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-300);
         }
         else if (station == 3) {
-            int value = rand.nextInt(945-905)+905;
+            int value = rand.nextInt(1150-1080)+1080;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(220);
+            imgview.setLayoutY(227);
 
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-300);
         }
         else if (station == 4){
-            int value = rand.nextInt(170-35)+35;
+            int value = rand.nextInt(150-10)+10;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(537);
+            imgview.setLayoutY(541);
 
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-700);
         }
         else if (station == 5) {
-            int value = rand.nextInt(454-334)+334;
+            int value = rand.nextInt(480-330)+330;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(537);
+            imgview.setLayoutY(541);
 
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-700);
         }
         else if (station == 6) {
-            int value = rand.nextInt(697-619)+619;
+            int value = rand.nextInt(770-680)+680;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(537);
+            imgview.setLayoutY(541);
 
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-700);
         }
         else if (station == 7) {
-            int value = rand.nextInt(934-817)+817;
+            int value = rand.nextInt(1200-1150)+1150;
             imgview.setLayoutX(value);
-            imgview.setLayoutY(537);
+            imgview.setLayoutY(541);
 
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-700);
@@ -693,10 +645,7 @@ public class Main extends Application implements Initializable{
                 rootPane.getChildren().add(imgview);
             }
         });
-
-
     }
-
 
     public static void main(String[] args) {
         launch(args);
