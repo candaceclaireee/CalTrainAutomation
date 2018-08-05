@@ -164,7 +164,66 @@ public class Main extends Application implements Initializable{
         temp.setSprite(img);
         System.out.println(temp);
 
-        allStations.get(in-1).addPassWaiting(temp);
+        if((out-1)==0){
+            temp.setDest(allStations.get(0));
+        }
+        else if ((out-1)==1){
+            temp.setDest(allStations.get(2));
+        }
+        else if ((out-1)==2){
+            temp.setDest(allStations.get(4));
+        }
+        else if ((out-1)==3){
+            temp.setDest(allStations.get(6));
+        }
+        else if ((out-1)==4){
+            temp.setDest(allStations.get(8));
+        }
+        else if ((out-1)==5){
+            temp.setDest(allStations.get(10));
+        }
+        else if ((out-1)==6){
+            temp.setDest(allStations.get(12));
+        }
+        else if ((out-1)==7){
+            temp.setDest(allStations.get(14));
+        }
+
+        if((in-1)==0){
+            temp.setSrc(allStations.get(0));
+            allStations.get(0).addPassWaiting(temp);
+        }
+        else if ((in-1)==1){
+            temp.setSrc(allStations.get(2));
+            allStations.get(2).addPassWaiting(temp);
+        }
+        else if ((in-1)==2){
+            temp.setSrc(allStations.get(4));
+            allStations.get(4).addPassWaiting(temp);
+        }
+        else if ((in-1)==3){
+            temp.setSrc(allStations.get(6));
+            allStations.get(6).addPassWaiting(temp);
+        }
+        else if ((in-1)==4){
+            temp.setSrc(allStations.get(8));
+            allStations.get(8).addPassWaiting(temp);
+        }
+        else if ((in-1)==5){
+            temp.setSrc(allStations.get(10));
+            allStations.get(10).addPassWaiting(temp);
+        }
+        else if ((in-1)==6){
+            temp.setSrc(allStations.get(12));
+            allStations.get(12).addPassWaiting(temp);
+        }
+        else if ((in-1)==7){
+            temp.setSrc(allStations.get(14));
+            allStations.get(14).addPassWaiting(temp);
+        }
+
+
+
 //        addLog( "[PASSENGER " + totalPassengers +"] Arrived at station " + in + " to station " + out +"\n");
 ////        addLog("-----------------------------------------------------\n");
         threadsCompleted++;
@@ -231,8 +290,10 @@ public class Main extends Application implements Initializable{
 
             try{Thread.sleep(2500);} catch(Exception e) {e.printStackTrace();}
 
+//            System.out.println("current station: "+allTrains.get(i).getCurrStation().getStationNum()+" next station: "+allTrains.get(i).getCurrStation().getNextStation().getStationNum());
             System.out.println("train num: "+allTrains.get(i).getTrainNum()+" passengers: "+allTrains.get(i).getPassBoarded().size());
             ArrayList <Integer> removeThese = new ArrayList<Integer>();
+
             for(int k=0; k<allTrains.get(i).getPassBoarded().size(); k++) {
                 System.out.println("k: "+k);
                 System.out.println("DEST: "+allTrains.get(i).getPassBoarded().get(k).getDest().getStationNum()+" CURR: "+allTrains.get(i).getCurrStation().getStationNum());
@@ -319,16 +380,16 @@ public class Main extends Application implements Initializable{
             try{Thread.sleep(800);} catch(Exception e){e.printStackTrace();}
 
             /* Make sure all trains return to first station */
-            if (totalPassServed == totalPassengers && i>0) {
-                allTrains.get(i).stopRun();
-                System.out.println("Train " + allTrains.get(i).getTrainNum() + " is decommissioned.");
-                decommissioned++;
-                allTrains.remove(allTrains.get(i));
-                i--;
-                if (allTrains.size() == 0) {
-                    System.out.println("All trains are gone!");
-                }
-            }
+//            if (totalPassServed == totalPassengers && i>0) {
+//                allTrains.get(i).stopRun();
+//                System.out.println("Train " + allTrains.get(i).getTrainNum() + " is decommissioned.");
+//                decommissioned++;
+//                allTrains.remove(allTrains.get(i));
+//                i--;
+//                if (allTrains.size() == 0) {
+//                    System.out.println("All trains are gone!");
+//                }
+//            }
 
 //            System.out.println("moving train");
 //            System.out.println(i);
@@ -357,13 +418,13 @@ public class Main extends Application implements Initializable{
     }
     public void updateStationPassengerText(){
         station1PassengerText.setText(Integer.toString(allStations.get(0).getPassWaiting().size()));
-        station2PassengerText.setText(Integer.toString(allStations.get(1).getPassWaiting().size()));
-        station3PassengerText.setText(Integer.toString(allStations.get(2).getPassWaiting().size()));
-        station4PassengerText.setText(Integer.toString(allStations.get(3).getPassWaiting().size()));
-        station5PassengerText.setText(Integer.toString(allStations.get(4).getPassWaiting().size()));
-        station6PassengerText.setText(Integer.toString(allStations.get(5).getPassWaiting().size()));
-        station7PassengerText.setText(Integer.toString(allStations.get(6).getPassWaiting().size()));
-        station8PassengerText.setText(Integer.toString(allStations.get(7).getPassWaiting().size()));
+        station2PassengerText.setText(Integer.toString(allStations.get(2).getPassWaiting().size()));
+        station3PassengerText.setText(Integer.toString(allStations.get(4).getPassWaiting().size()));
+        station4PassengerText.setText(Integer.toString(allStations.get(6).getPassWaiting().size()));
+        station5PassengerText.setText(Integer.toString(allStations.get(8).getPassWaiting().size()));
+        station6PassengerText.setText(Integer.toString(allStations.get(10).getPassWaiting().size()));
+        station7PassengerText.setText(Integer.toString(allStations.get(12).getPassWaiting().size()));
+        station8PassengerText.setText(Integer.toString(allStations.get(14).getPassWaiting().size()));
     }
 
 
@@ -577,14 +638,14 @@ public class Main extends Application implements Initializable{
 
         Random rand = new Random();
 
-        if (station == 1) {
+        if (station == 2) {
             int value = rand.nextInt(470-379)+379;
             imgview.setLayoutX(value);
             imgview.setLayoutY(227);
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-300);
         }
-        else if (station == 2){
+        else if (station == 4){
             int value = rand.nextInt(820-700)+700;
             imgview.setLayoutX(value);
             imgview.setLayoutY(227);
@@ -593,7 +654,7 @@ public class Main extends Application implements Initializable{
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-300);
         }
-        else if (station == 3) {
+        else if (station == 6) {
             int value = rand.nextInt(1150-1080)+1080;
             imgview.setLayoutX(value);
             imgview.setLayoutY(227);
@@ -601,7 +662,7 @@ public class Main extends Application implements Initializable{
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-300);
         }
-        else if (station == 4){
+        else if (station == 8){
             int value = rand.nextInt(150-10)+10;
             imgview.setLayoutX(value);
             imgview.setLayoutY(541);
@@ -609,7 +670,7 @@ public class Main extends Application implements Initializable{
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-700);
         }
-        else if (station == 5) {
+        else if (station == 10) {
             int value = rand.nextInt(480-330)+330;
             imgview.setLayoutX(value);
             imgview.setLayoutY(541);
@@ -617,7 +678,7 @@ public class Main extends Application implements Initializable{
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-700);
         }
-        else if (station == 6) {
+        else if (station == 12) {
             int value = rand.nextInt(770-680)+680;
             imgview.setLayoutX(value);
             imgview.setLayoutY(541);
@@ -625,7 +686,7 @@ public class Main extends Application implements Initializable{
             try{Thread.sleep(1000);} catch(Exception e) {e.printStackTrace();}
             transitn.setByY(-700);
         }
-        else if (station == 7) {
+        else if (station == 14) {
             int value = rand.nextInt(1200-1150)+1150;
             imgview.setLayoutX(value);
             imgview.setLayoutY(541);
